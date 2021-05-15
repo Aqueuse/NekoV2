@@ -3,19 +3,20 @@ package toy;
 import neko.Neko;
 
 import java.awt.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Toy extends javax.swing.JWindow {
-    BufferedImage toy;
-    ImageIcon[] toySprites;
+    ImageIcon[] toySprites = {
+            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool1.png"))),
+            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool2.png"))),
+            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool3.png"))),
+            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool4.png"))),
+            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool5.png"))),
+            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool6.png"))),
+    };
     JLabel imageLabel = new JLabel();
 
     int loopCounter = 0;
@@ -34,24 +35,6 @@ public class Toy extends javax.swing.JWindow {
     public Toy() {
         getRootPane().putClientProperty("Window.shadow", false);
         this.add(imageLabel);
-
-        try {
-            toy = ImageIO.read(new File(
-                            Objects.requireNonNull(Toy.class.getResource(
-                                    "images/woolSheet.png"
-                            )).toURI()
-                    )
-            );
-        } catch (IOException | URISyntaxException e) {
-            System.out.println(e);
-        }
-
-        toySprites = new ImageIcon[toy.getWidth() / 32];
-
-        // load the sprites in an ImageIcon subImages array
-        for (int i = 0; i < toySprites.length; i++) {
-            toySprites[i] = new ImageIcon(toy.getSubimage(i * 32, 0, 32, 32));
-        }
 
         imageLabel.setIcon(toySprites[0]);
 
