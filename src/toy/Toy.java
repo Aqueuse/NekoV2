@@ -3,8 +3,6 @@ package toy;
 import neko.Neko;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -12,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Toy extends javax.swing.JWindow {
@@ -38,9 +37,9 @@ public class Toy extends javax.swing.JWindow {
 
         try {
             toy = ImageIO.read(new File(
-                            Toy.class.getResource(
+                            Objects.requireNonNull(Toy.class.getResource(
                                     "images/woolSheet.png"
-                            ).toURI()
+                            )).toURI()
                     )
             );
         } catch (IOException | URISyntaxException e) {
@@ -71,50 +70,46 @@ public class Toy extends javax.swing.JWindow {
 
     private void animateToy() {
         // animate the toy by switching images in a loop with folder content
-        animateTimer = new Timer(200, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                imageLabel.setIcon(toySprites[loopCounter]);
-                loopCounter = loopCounter + 1;
-                if (loopCounter == toySprites.length) loopCounter = 0;
-            }
+        animateTimer = new Timer(200, e -> {
+            imageLabel.setIcon(toySprites[loopCounter]);
+            loopCounter = loopCounter + 1;
+            if (loopCounter == toySprites.length) loopCounter = 0;
         });
         animateTimer.setRepeats(true);
         animateTimer.start();
     }
 
     private void moveToy() {
-        moveTimer = new Timer(200, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                boolean reachedX = Neko.myNeko.getX() >= getX()-16 && Neko.myNeko.getX() <= getX()+16;
-                boolean reachedY = Neko.myNeko.getY() >= getY()-16 && Neko.myNeko.getY() <= getY()+16;
-                if (reachedX && reachedY) {
-                    catched = true;
+        moveTimer = new Timer(200, e -> {
+            boolean reachedX = Neko.myNeko.getX() >= getX()-16 && Neko.myNeko.getX() <= getX()+16;
+            boolean reachedY = Neko.myNeko.getY() >= getY()-16 && Neko.myNeko.getY() <= getY()+16;
+            if (reachedX && reachedY) {
+                catched = true;
+            }
+
+            if (!catched) {
+                setLocation(toyPositionX, toyPositionY);
+
+                if (direction.equals("topLeft")) {
+                    moveTopLeft();
                 }
 
-                if (!catched) {
-                    setLocation(toyPositionX, toyPositionY);
-
-                    if (direction.equals("topLeft")) {
-                        moveTopLeft();
-                    }
-
-                    if (direction.equals("topRight")) {
-                        moveTopRight();
-                    }
-
-                    if (direction.equals("bottomLeft")) {
-                        moveBottomLeft();
-                    }
-
-                    if (direction.equals("bottomRight")) {
-                        moveBottomRight();
-                    }
+                if (direction.equals("topRight")) {
+                    moveTopRight();
                 }
-                if (catched) {
-                    moveTimer.stop();
-                    animateTimer.stop();
-                    setVisible(false);
+
+                if (direction.equals("bottomLeft")) {
+                    moveBottomLeft();
                 }
+
+                if (direction.equals("bottomRight")) {
+                    moveBottomRight();
+                }
+            }
+            if (catched) {
+                moveTimer.stop();
+                animateTimer.stop();
+                setVisible(false);
             }
         });
         moveTimer.setRepeats(true);

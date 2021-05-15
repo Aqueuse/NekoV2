@@ -17,44 +17,106 @@ import systemTray.MySystemTray;
 import toy.Toy;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 
-/**
- * Neko the cat.
- * <p>
- * This program loads in 32 images of Neko. Neko will chase you mouse cursor
- * around the desktop. Once he's over it and the mouse doesn't move he'll
- * prepare to take a nap. If the mouse go's outside the desktop he will
- * reach the border and try to dig for it. He'll eventually give up, and
- * fall asleep.
- *
- * @author Werner Randelshofer (adaption for desktop)
- * Chris Parent (original code)
- * @version 1.0.1 2010-07-17 Fixes timers. Sets longer sleep times when the
- * cat sleeps.
- * <br>1.0 2010-07-16 Created.
- */
-
 public class Neko extends javax.swing.JWindow {
-    private final javax.swing.JLabel imageLabel;
-    public static ImageIcon[] image; // image
 
-    private int imageNumber;           // image number
-    private int imageLoopCounter1 = 0;     // image loop counter
-    private int imageLoopCounter2 = 0;     // second loop counter
+    private int loopCounter = 0;
+
+    private final javax.swing.JLabel imageLabel;
+    private ImageIcon[] kittySprites;
+
+    ImageIcon[] animateLeft = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "left1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "left2.GIF")))
+    };
+    ImageIcon[] animateRight = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "right1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "right2.GIF")))
+    };
+    ImageIcon[] animateTop = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "top1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "top2.GIF")))
+    };
+    ImageIcon[] animateBottom = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "bottom1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "bottom2.GIF")))
+    };
+    ImageIcon[] animateLeftTop = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop2.GIF")))
+    };
+    ImageIcon[] animateLeftBottom = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftBottom1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftBottom2.GIF")))
+    };
+    ImageIcon[] animateRightTop = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightTop1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightTop2.GIF")))
+    };
+    ImageIcon[] animateRightBottom = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightBottom1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightBottom2.GIF")))
+    };
+
+    ImageIcon[] animateScratchLeft = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchLeft1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchLeft2.GIF")))
+    };
+    ImageIcon[] animateScratchRight = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchRight1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchRight2.GIF")))
+    };
+    ImageIcon[] animateScratchTop = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchTop1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchTop2.GIF")))
+    };
+    ImageIcon[] animateScratchBottom = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchBottom1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchBottom2.GIF")))
+    };
+
+    ImageIcon[] animatePrepareToSleep = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF")))
+    };
+    ImageIcon[] animateSleep = {
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF")))
+    };
 
     private int sleepCounter = 0;
     public Point mouseLocation;
 
-    private int moveCounter = ThreadLocalRandom.current().nextInt(500, 700);
+    private int moveCounter = ThreadLocalRandom.current().nextInt(100, 200);
     private int randomX;
     private int randomY;
     final double pi = Math.PI;
+    private String orientation;
 
     public boolean basketReached = false;
 
@@ -68,185 +130,61 @@ public class Neko extends javax.swing.JWindow {
         setAlwaysOnTop(true);
         this.setBackground(new Color(0, 0, 0, 0));
 
-        loadKitten();
         imageLabel = new javax.swing.JLabel();
         getContentPane().add(imageLabel, java.awt.BorderLayout.CENTER);
-
         pack();
 
-        setSize(image[1].getIconWidth(), image[1].getIconHeight());
+        setSize(32, 32);
         setLocation(500, 500);
+        setVisible(true);
 
-        this.setVisible(true);
-
-        Timer timer = new Timer(200, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                switch (MySystemTray.kittyState) {
-                    case "chase":
-                        // chase the mouse
-                        setVisible(true);
-                        PointerInfo pointerInfo = MouseInfo.getPointerInfo();
-                        mouseLocation = pointerInfo.getLocation();
-                        moveCatToPosition(mouseLocation.x, mouseLocation.y);
-                        break;
-                    case "catch":
-                        // catch the ball of yarn
-                        setVisible(true);
-                        if (!Toy.catched) {
-                            moveCatToPosition(Toy.toyPositionX, Toy.toyPositionY);
-                        }
-                        else {
-                            Toy.catched = false;
-                            MySystemTray.kittyState = "autonom";
-                        }
-                        break;
-                    case "sleep":
-                        // go to basket and sleep in
-                        basketReached = moveCatToPosition(screenWidth - 220, screenHeight-30);
-                        if (basketReached) {
-                            setVisible(false);
-                            MySystemTray.changeSystemTrayIcon(MySystemTray.trayIconBasket);
-                            MySystemTray.kittyState = "idle";
-                        }
-                        break;
-                    case "autonom":
-                        // go where you want
-                        setVisible(true);
-                        moveCounter = moveCounter - 1;
-                        if (moveCounter == 500) {
-                            randomX = ThreadLocalRandom.current().nextInt(0, screenWidth);
-                            randomY = ThreadLocalRandom.current().nextInt(0, screenHeight);
-                            moveCounter = ThreadLocalRandom.current().nextInt(500, 700);
-                        }
-                        moveCatToPosition(randomX, randomY);
-                        break;
-                    case "idle":
-                        break;
-                    default:
-                        MySystemTray.kittyState = "chase";
-                }
+        Timer timer = new Timer(200, e -> {
+            switch (MySystemTray.kittyState) {
+                case "chase":
+                    // chase the mouse
+                    setVisible(true);
+                    PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+                    mouseLocation = pointerInfo.getLocation();
+                    moveCatToPosition(mouseLocation.x, mouseLocation.y);
+                    break;
+                case "catch":
+                    // catch the ball of yarn
+                    setVisible(true);
+                    if (!Toy.catched) {
+                        moveCatToPosition(Toy.toyPositionX, Toy.toyPositionY);
+                    } else {
+                        Toy.catched = false;
+                        MySystemTray.kittyState = "autonom";
+                    }
+                    break;
+                case "sleep":
+                    // go to basket and sleep in
+                    basketReached = moveCatToPosition(screenWidth - 220, screenHeight - 30);
+                    if (basketReached) {
+                        setVisible(false);
+                        MySystemTray.changeSystemTrayIcon(MySystemTray.trayIconBasket);
+                        MySystemTray.kittyState = "idle";
+                    }
+                    break;
+                case "autonom":
+                    // go where you want
+                    setVisible(true);
+                    moveCounter = moveCounter - 1;
+                    if (moveCounter == 100) {
+                        randomX = ThreadLocalRandom.current().nextInt(0, screenWidth);
+                        randomY = ThreadLocalRandom.current().nextInt(0, screenHeight);
+                        moveCounter = ThreadLocalRandom.current().nextInt(100, 200);
+                    }
+                    moveCatToPosition(randomX, randomY);
+                    break;
+                case "idle":
+                    break;
+                default:
+                    MySystemTray.kittyState = "chase";
             }
         });
         timer.setRepeats(true);
         timer.start();
-    }
-
-    private void loadKitten() {
-        image = new ImageIcon[33];
-        for (int i = 1; i <= 32; i++) {
-            image[i] = new ImageIcon(Neko.class.getResource("images/" + i + ".GIF"));
-        }
-    }
-
-    private void animateCat(double theta, boolean sleep, boolean out, String orientation) {
-        if (sleep) {
-            sleepCounter++;
-            if (sleepCounter == 20) {
-                imageNumber = 29;
-            }
-            //cat lick (6  times)
-            if (imageNumber == 31) {
-                imageNumber = 25;
-                imageLoopCounter1++;
-                if (imageLoopCounter1 == 6) {
-                    imageNumber = 27;
-                    imageLoopCounter1 = 0;
-                }
-            }
-
-            //cat scratch (27 & 28, 4 times)
-            if (imageNumber == 27) {
-                imageNumber = 28;
-            }
-
-            if (imageNumber == 28) {
-                imageNumber = 27;
-                imageLoopCounter2++;
-                if (imageLoopCounter2 == 4) {
-                    imageNumber = 26;
-                    imageLoopCounter2 = 0;
-                }
-            }
-
-            //cat yawn (26)
-            if (imageNumber == 26 || imageNumber == 30) {
-                imageNumber = 29;
-            }
-
-            //cat sleep (29 & 30, forever)
-            if (imageNumber == 29) {
-                imageNumber = 30;
-            }
-        }
-
-        if (!sleep) {
-            // gratouilles management
-            sleepCounter = 0;
-            if (out) {
-                if (orientation.equals("top")) {
-                    imageNumber = 18;    // show images 17 & 18, 6 times
-                    imageLoopCounter1++;
-                    if (imageLoopCounter1 == 6) {
-                        imageNumber = 27;
-                        imageLoopCounter1 = 0;
-                    }
-                }
-                if (orientation.equals("bottom")) {
-                    imageNumber = 22;
-                    imageLoopCounter1++;
-                    if (imageLoopCounter1 == 6) {
-                        imageNumber = 27;
-                        imageLoopCounter1 = 0;
-                    }
-                }
-                if (orientation.equals("left")) {
-                    imageNumber = 24;
-                    imageLoopCounter1++;
-                    if (imageLoopCounter1 == 6) {
-                        imageNumber = 27;
-                        imageLoopCounter1 = 0;
-                    }
-                }
-                if (orientation.equals("right")) {
-                    imageNumber = 20;
-                    imageLoopCounter1++;
-                    if (imageLoopCounter1 == 6) {
-                        imageNumber = 27;
-                        imageLoopCounter1 = 0;
-                    }
-                }
-            }
-            else {
-                // orientation management
-                if (theta >= -pi / 8 && theta <= pi / 8) { //right
-                    imageNumber = (imageNumber == 5) ? 6 : 5;
-                }
-                if (theta > pi / 8 && theta < 3 * pi / 8) { //upper-right
-                    imageNumber = (imageNumber == 3) ? 4 : 3;
-                }
-                if (theta >= 3 * pi / 8 && theta <= 5 * pi / 8) { //up
-                    imageNumber = (imageNumber == 1) ? 2 : 1;
-                }
-                if (theta > 5 * pi / 8 && theta < 7 * pi / 8) { //upper-left
-                    imageNumber = (imageNumber == 15) ? 16 : 15;
-                }
-                if (theta >= 7 * pi / 8 || theta <= -7 * pi / 8) { //left
-                    imageNumber = (imageNumber == 13) ? 14 : 13;
-                }
-                if (theta > -7 * pi / 8 && theta < -5 * pi / 8) { //bottom-left
-                    imageNumber = (imageNumber == 11) ? 12 : 11;
-                }
-                if (theta >= -5 * pi / 8 && theta <= -3 * pi / 8) { //down
-                    imageNumber = (imageNumber == 9) ? 10 : 9;
-                }
-                if (theta > -3 * pi / 8 && theta < -pi / 8) { //bottom-right
-                    imageNumber = (imageNumber == 7) ? 8 : 7;
-                }
-            }
-        }
-
-        //draw the new image
-        imageLabel.setIcon(image[imageNumber]);
     }
 
     public boolean moveCatToPosition(int coordinateX, int coordinateY) {
@@ -258,59 +196,103 @@ public class Neko extends javax.swing.JWindow {
         double deltaX = coordinateX - nekoX;
         double deltaY = nekoY - coordinateY;
 
-        double theta = Math.atan2(deltaY, deltaX);     // angle from coordinates to cat
+        double theta_angle = Math.atan2(deltaY, deltaX); // angle from coordinates to cat
 
         /* Determines what the cat should do, if he is not in the coordinates x,y */
-        int nextCoordinateX = (int) (nekoX + Math.cos(theta) * 16);
-        int nextCoordinateY = (int) (nekoY - Math.sin(theta) * 16);
+        int nextCoordinateX = (int) (nekoX + Math.cos(theta_angle) * 16);
+        int nextCoordinateY = (int) (nekoY - Math.sin(theta_angle) * 16);
 
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY); // distance formula (from coordinates to cat)
 
         if (distance <= 32) {
-            //The coordinate is outside, above applet
-            if (nekoY == 0) {
-                System.out.println("scratch scratch");
-                animateCat(0, false, true, "top");
+            // Find kitty position
+            if (nekoX <= 0) {
+                animateScratch("left");
             }
-
-            //The coordinate is outside, under applet
-            if (nekoY >= screenHeight - 16) {
-                System.out.println("scratch scratch");
-                animateCat(0, false, true, "bottom");
+            if (nekoY <= 0) {
+                animateScratch("top");
             }
-
-            //The coordinate is outside, left
-            if (nekoX == 0) {
-                System.out.println("scratch scratch");
-                animateCat(0, false, true, "left");
+            if (nekoX >= screenWidth - 40) {
+                animateScratch("right");
             }
-
-            //The coordinate is outside, right
-            if (nekoX >= screenWidth - 16) {
-                System.out.println("scratch scratch");
-                animateCat(0, false, true, "right");
+            if (nekoY >= screenHeight - 50) {
+                animateScratch("bottom");
             }
-            else {
-                animateCat(0, true, false, "osef");
-                System.out.println("sleep sleep");
+            if (nekoX > 0 && nekoX < screenWidth - 32 &&
+                nekoY > 0 && nekoY < screenHeight - 32) {
+                sleepCounter = sleepCounter + 1;
+                if (sleepCounter < 14) animatePrepareToSleep();
+                if (sleepCounter >= 14) {
+                    animateSleep();
+                }
                 destinationReached = true;
             }
         }
         else {
-            destinationReached = false;
-            System.out.println("moving moving");
+            sleepCounter = 0;
             setLocation(nextCoordinateX, nextCoordinateY);
-            animateCat(theta, false, false, "osef");
+            animateMove(theta_angle);
         }
         return destinationReached;
     }
 
+    private void animateMove(double theta) {
+        // recalculate orientation
+        if (theta >= 7 * pi / 8 || theta <= -7 * pi / 8) orientation = "left";
+        if (theta >= -pi / 8 && theta <= pi / 8) orientation = "right";
+        if (theta >= 3 * pi / 8 && theta <= 5 * pi / 8) orientation = "top";
+        if (theta >= -5 * pi / 8 && theta <= -3 * pi / 8) orientation = "bottom";
+        if (theta > 5 * pi / 8 && theta < 7 * pi / 8) orientation = "leftTop";
+        if (theta > -7 * pi / 8 && theta < -5 * pi / 8) orientation = "leftBottom";
+        if (theta > pi / 8 && theta < 3 * pi / 8) orientation = "rightTop";
+        if (theta > -3 * pi / 8 && theta < -pi / 8) orientation = "rightBottom";
+
+        switch (orientation) {
+            case "left" -> kittySprites = animateLeft;
+            case "right" -> kittySprites = animateRight;
+            case "top" -> kittySprites = animateTop;
+            case "bottom" -> kittySprites = animateBottom;
+            case "leftTop" -> kittySprites = animateLeftTop;
+            case "leftBottom" -> kittySprites = animateLeftBottom;
+            case "rightTop" -> kittySprites = animateRightTop;
+            case "rightBottom" -> kittySprites = animateRightBottom;
+        }
+
+        imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
+    }
+
+    private void animateScratch(String kittyPosition) {
+        switch (kittyPosition) {
+            case "left" -> kittySprites = animateScratchLeft;
+            case "right" -> kittySprites = animateScratchRight;
+            case "top" -> kittySprites = animateScratchTop;
+            case "bottom" -> kittySprites = animateScratchBottom;
+        }
+        imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
+    }
+
+    private void animatePrepareToSleep() {
+        kittySprites = animatePrepareToSleep;
+        imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
+    }
+
+    private void animateSleep() {
+        kittySprites = animateSleep;
+        imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
+    }
+
+    private int loopIndex(ImageIcon[] arraySprites) {
+        loopCounter = loopCounter + 1;
+        if (loopCounter >= arraySprites.length) {
+            loopCounter = 0;
+        }
+        return loopCounter;
+    }
+
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MySystemTray();
-                myNeko = new Neko();
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MySystemTray();
+            myNeko = new Neko();
         });
     }
 }

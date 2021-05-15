@@ -5,12 +5,12 @@ import neko.Neko;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MySystemTray {
     final static SystemTray tray = SystemTray.getSystemTray();
@@ -84,12 +84,9 @@ public class MySystemTray {
         }
     };
 
-    ActionListener exitListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == exitItem) {
-                System.exit(0);
-            }
+    ActionListener exitListener = e -> {
+        if (e.getSource() == exitItem) {
+            System.exit(0);
         }
     };
 
@@ -103,8 +100,8 @@ public class MySystemTray {
         autonomeItem.setState(true);
 
         try {
-            trayIconImageNormal = ImageIO.read(MySystemTray.class.getResource("images/icon.gif"));
-            trayIconImageBasket = ImageIO.read(MySystemTray.class.getResource("images/nekoInbasket.png"));
+            trayIconImageNormal = ImageIO.read(Objects.requireNonNull(MySystemTray.class.getResource("images/icon.gif")));
+            trayIconImageBasket = ImageIO.read(Objects.requireNonNull(MySystemTray.class.getResource("images/nekoInbasket.png")));
         }
         catch (IOException ioException) {
             System.out.println(ioException);
