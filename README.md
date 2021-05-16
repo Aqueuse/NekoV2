@@ -13,4 +13,4 @@ Validated on Windows 10, with java 15 & 16.
 * Be sure to have a Java Virtual Machine 15 or 6 installed.
   You should be able to find the java.exe on the command line.
 
-* Execute the run.bat file (double click on it).
+* Execute the run.bat file or double click the jar file.
