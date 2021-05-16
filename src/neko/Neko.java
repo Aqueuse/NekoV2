@@ -170,7 +170,7 @@ public class Neko extends javax.swing.JWindow {
                     // go where you want
                     setVisible(true);
                     moveCounter = moveCounter - 1;
-                    if (moveCounter == 100) {
+                    if (moveCounter < 100) {
                         randomX = ThreadLocalRandom.current().nextInt(0, screenWidth);
                         randomY = ThreadLocalRandom.current().nextInt(0, screenHeight);
                         moveCounter = ThreadLocalRandom.current().nextInt(100, 200);
