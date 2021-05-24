@@ -10,7 +10,9 @@ Validated on Windows 10, with java 15 & 16.
 
 * Download the .jar file and the run.bat file on the last release page.
 
-* Be sure to have a Java Virtual Machine 15 or 6 installed.
+* Be sure to have a Java Developpment Kit 15 or 6 installed.
   You should be able to find the java.exe on the command line.
+  
+     => link to the JDK 16 : https://www.oracle.com/java/technologies/javase-jdk16-downloads.html#license-lightbox
 
 * Execute the run.bat file or double click the jar file.
