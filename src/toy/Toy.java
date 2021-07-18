@@ -1,26 +1,19 @@
 package toy;
 
-import neko.Neko;
-
 import java.awt.*;
 import javax.swing.*;
-
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
+import neko.Neko;
+import static toy.ToyAssets.toySprites;
+
 public class Toy extends javax.swing.JWindow {
-    ImageIcon[] toySprites = {
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool1.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool2.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool3.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool4.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool5.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool6.png"))),
-    };
     JLabel imageLabel = new JLabel();
 
     int loopCounter = 0;
-    String direction = "topLeft";
+    enum ToyDirection { TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT }
+    int randomDirection = ThreadLocalRandom.current().nextInt(0, ToyDirection.values().length);
+    ToyDirection direction = ToyDirection.values()[randomDirection];
 
     public static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     public static final int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -48,7 +41,7 @@ public class Toy extends javax.swing.JWindow {
         setLocation(toyPositionX, toyPositionY);
         this.setVisible(true);
         animateToy();
-        moveToy();
+        startBounceToy();
     }
 
     private void animateToy() {
@@ -62,30 +55,29 @@ public class Toy extends javax.swing.JWindow {
         animateTimer.start();
     }
 
-    private void moveToy() {
+    private void startBounceToy() {
         moveTimer = new Timer(200, e -> {
             boolean reachedX = Neko.myNeko.getX() >= getX()-16 && Neko.myNeko.getX() <= getX()+16;
             boolean reachedY = Neko.myNeko.getY() >= getY()-16 && Neko.myNeko.getY() <= getY()+16;
             if (reachedX && reachedY) {
                 catched = true;
             }
-
             if (!catched) {
                 setLocation(toyPositionX, toyPositionY);
 
-                if (direction.equals("topLeft")) {
+                if (direction == ToyDirection.TOPLEFT) {
                     moveTopLeft();
                 }
 
-                if (direction.equals("topRight")) {
+                if (direction == ToyDirection.TOPRIGHT) {
                     moveTopRight();
                 }
 
-                if (direction.equals("bottomLeft")) {
+                if (direction == ToyDirection.BOTTOMLEFT) {
                     moveBottomLeft();
                 }
 
-                if (direction.equals("bottomRight")) {
+                if (direction == ToyDirection.BOTTOMRIGHT) {
                     moveBottomRight();
                 }
             }
@@ -101,10 +93,10 @@ public class Toy extends javax.swing.JWindow {
 
     private void moveTopRight() {
         if (toyPositionX >= screenWidth) {
-            direction = "topLeft";
+            direction = ToyDirection.TOPLEFT;
         }
         if (toyPositionY <= 0) {
-            direction = "bottomRight";
+            direction = ToyDirection.BOTTOMRIGHT;
         } else {
             toyPositionX = toyPositionX + 15;
             toyPositionY = toyPositionY - 15;
@@ -113,11 +105,11 @@ public class Toy extends javax.swing.JWindow {
 
     private void moveBottomRight() {
         if (toyPositionX >= screenWidth) {
-            direction = "bottomLeft";
+            direction = ToyDirection.BOTTOMLEFT;
         }
 
         if (toyPositionY >= screenHeight) {
-            direction = "topRight";
+            direction = ToyDirection.TOPRIGHT;
         } else {
             toyPositionX = toyPositionX + 15;
             toyPositionY = toyPositionY + 15;
@@ -126,11 +118,11 @@ public class Toy extends javax.swing.JWindow {
 
     private void moveBottomLeft() {
         if (toyPositionX <= 0) {
-            direction = "bottomRight";
+            direction = ToyDirection.BOTTOMRIGHT;
         }
 
         if (toyPositionY >= screenHeight) {
-            direction = "topLeft";
+            direction = ToyDirection.TOPLEFT;
         } else {
             toyPositionX = toyPositionX - 15;
             toyPositionY = toyPositionY + 15;
@@ -139,10 +131,10 @@ public class Toy extends javax.swing.JWindow {
 
     private void moveTopLeft() {
         if (toyPositionX <= 0) {
-            direction = "topRight";
+            direction = ToyDirection.TOPRIGHT;
         }
         if (toyPositionY <= 0) {
-            direction = "bottomLeft";
+            direction = ToyDirection.BOTTOMLEFT;
         } else {
             toyPositionX = toyPositionX - 15;
             toyPositionY = toyPositionY - 15;

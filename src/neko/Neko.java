@@ -1,26 +1,13 @@
-/*
- * @(#)Neko.java  1.0  2010-07-16
- *
- * Copyright (c) 2010 Werner Randelshofer
- * Hausmatt 10, Immensee, CH-6405, Switzerland.
- *
- * This source code is free to everyone.
- *
- * This is a desktop adaptation of the applet
- * JAVA NEKO V1.0 by Chris Parent, 1999.
- * http://mysite.ncnetwork.net/res8t1xo/class/neko.htm
- */
-
 package neko;
 
-import systemTray.MySystemTray;
-import toy.Toy;
-
 import java.awt.*;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
+
+import systemTray.MySystemTray;
+import toy.Toy;
+import static neko.NekoAssets.*;
 
 public class Neko extends javax.swing.JWindow {
 
@@ -28,86 +15,6 @@ public class Neko extends javax.swing.JWindow {
 
     private final javax.swing.JLabel imageLabel;
     private ImageIcon[] kittySprites;
-
-    ImageIcon[] animateLeft = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "left1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "left2.GIF")))
-    };
-    ImageIcon[] animateRight = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "right1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "right2.GIF")))
-    };
-    ImageIcon[] animateTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "top1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "top2.GIF")))
-    };
-    ImageIcon[] animateBottom = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "bottom1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "bottom2.GIF")))
-    };
-    ImageIcon[] animateLeftTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop2.GIF")))
-    };
-    ImageIcon[] animateLeftBottom = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftBottom1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftBottom2.GIF")))
-    };
-    ImageIcon[] animateRightTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightTop1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightTop2.GIF")))
-    };
-    ImageIcon[] animateRightBottom = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightBottom1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightBottom2.GIF")))
-    };
-
-    ImageIcon[] animateScratchLeft = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchLeft1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchLeft2.GIF")))
-    };
-    ImageIcon[] animateScratchRight = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchRight1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchRight2.GIF")))
-    };
-    ImageIcon[] animateScratchTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchTop1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchTop2.GIF")))
-    };
-    ImageIcon[] animateScratchBottom = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchBottom1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchBottom2.GIF")))
-    };
-
-    ImageIcon[] animatePrepareToSleep = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF")))
-    };
-    ImageIcon[] animateSleep = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF")))
-    };
 
     private int sleepCounter = 0;
     public Point mouseLocation;
@@ -140,34 +47,30 @@ public class Neko extends javax.swing.JWindow {
 
         Timer timer = new Timer(200, e -> {
             switch (MySystemTray.kittyState) {
-                case "chase":
-                    // chase the mouse
+                case CHASE:
                     setVisible(true);
                     PointerInfo pointerInfo = MouseInfo.getPointerInfo();
                     mouseLocation = pointerInfo.getLocation();
                     moveCatToPosition(mouseLocation.x, mouseLocation.y);
                     break;
-                case "catch":
-                    // catch the ball of yarn
+                case CATCH:
                     setVisible(true);
                     if (!Toy.catched) {
                         moveCatToPosition(Toy.toyPositionX, Toy.toyPositionY);
                     } else {
                         Toy.catched = false;
-                        MySystemTray.kittyState = "autonom";
+                        MySystemTray.kittyState = MySystemTray.KittyState.AUTONOM;
                     }
                     break;
-                case "sleep":
-                    // go to basket and sleep in
+                case SLEEP:
                     basketReached = moveCatToPosition(screenWidth - 220, screenHeight - 30);
                     if (basketReached) {
                         setVisible(false);
                         MySystemTray.changeSystemTrayIcon(MySystemTray.trayIconBasket);
-                        MySystemTray.kittyState = "idle";
+                        MySystemTray.kittyState = MySystemTray.KittyState.IDLE;
                     }
                     break;
-                case "autonom":
-                    // go where you want
+                case AUTONOM:
                     setVisible(true);
                     moveCounter = moveCounter - 1;
                     if (moveCounter < 100) {
@@ -177,10 +80,10 @@ public class Neko extends javax.swing.JWindow {
                     }
                     moveCatToPosition(randomX, randomY);
                     break;
-                case "idle":
+                case IDLE:
                     break;
                 default:
-                    MySystemTray.kittyState = "chase";
+                    MySystemTray.kittyState = MySystemTray.KittyState.CHASE;
             }
         });
         timer.setRepeats(true);

@@ -28,7 +28,14 @@ public class MySystemTray {
     static MenuItem exitItem = new MenuItem("Exit");
 
     Toy newToy;
-    public static String kittyState = "autonom";
+    public static enum KittyState {
+        CHASE,
+        CATCH,
+        AUTONOM,
+        IDLE,
+        SLEEP
+    }
+    public static KittyState kittyState = KittyState.AUTONOM;
 
     ItemListener buttonsListener = new ItemListener() {
         @Override
@@ -43,7 +50,7 @@ public class MySystemTray {
 
                 Neko.myNeko.basketReached = false;
                 Toy.catched = true;
-                kittyState = "chase";
+                kittyState = KittyState.CHASE;
             }
             if (e.getSource() == toyItem) {  // catch the toy
                 basketItem.setState(false);
@@ -56,7 +63,7 @@ public class MySystemTray {
 
                 Neko.myNeko.basketReached = false;
                 Toy.catched = false;
-                kittyState = "catch";
+                kittyState = KittyState.CATCH;
             }
             if (e.getSource() == basketItem) {  // go sleep in the basket
                 toyItem.setState(false);
@@ -67,7 +74,7 @@ public class MySystemTray {
                 if (newToy != null) newToy.dispose();
 
                 Toy.catched = true;
-                kittyState = "sleep";
+                kittyState = KittyState.SLEEP;
             }
             if (e.getSource() == autonomeItem) { // do what you want, don't chase the mouse
                 basketItem.setState(false);
@@ -79,7 +86,7 @@ public class MySystemTray {
 
                 Toy.catched = true;
                 Neko.myNeko.basketReached = false;
-                kittyState = "autonom";
+                kittyState = KittyState.AUTONOM;
             }
         }
     };
