@@ -7,6 +7,8 @@ import javax.swing.Timer;
 
 import systemTray.MySystemTray;
 import toy.Toy;
+import twitchInteraction.TwitchListen;
+
 import static neko.NekoAssets.*;
 
 public class Neko extends javax.swing.JWindow {
@@ -22,6 +24,8 @@ public class Neko extends javax.swing.JWindow {
     private int moveCounter = ThreadLocalRandom.current().nextInt(100, 200);
     private int randomX;
     private int randomY;
+    private int listen_x = 0;
+    private  int listen_y = 0;
     final double pi = Math.PI;
     private String orientation;
 
@@ -38,7 +42,7 @@ public class Neko extends javax.swing.JWindow {
         this.setBackground(new Color(0, 0, 0, 0));
 
         imageLabel = new javax.swing.JLabel();
-        getContentPane().add(imageLabel, java.awt.BorderLayout.CENTER);
+        getContentPane().add(imageLabel, BorderLayout.CENTER);
         pack();
 
         setSize(32, 32);
@@ -81,6 +85,15 @@ public class Neko extends javax.swing.JWindow {
                     moveCatToPosition(randomX, randomY);
                     break;
                 case IDLE:
+                    break;
+                case LISTEN:
+                    moveCounter = moveCounter - 5;
+                    if (moveCounter < 100) {
+                        listen_x = TwitchListen.x_coordinates;
+                        listen_y = TwitchListen.y_coordinates;
+                        moveCounter = 200;
+                    }
+                    moveCatToPosition(listen_x, listen_y);
                     break;
                 default:
                     MySystemTray.kittyState = MySystemTray.KittyState.CHASE;
@@ -193,7 +206,7 @@ public class Neko extends javax.swing.JWindow {
     }
 
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(() -> {
+        EventQueue.invokeLater(() -> {
             new MySystemTray();
             myNeko = new Neko();
         });

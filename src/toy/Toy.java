@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import neko.Neko;
 import static toy.ToyAssets.toySprites;
 
-public class Toy extends javax.swing.JWindow {
+public class Toy extends JWindow {
     JLabel imageLabel = new JLabel();
 
     int loopCounter = 0;
@@ -31,7 +31,7 @@ public class Toy extends javax.swing.JWindow {
 
         imageLabel.setIcon(toySprites[0]);
 
-        this.getContentPane().add(imageLabel, java.awt.BorderLayout.CENTER);
+        this.getContentPane().add(imageLabel, BorderLayout.CENTER);
         pack();
 
         setAlwaysOnTop(true);

@@ -2,6 +2,7 @@ package systemTray;
 
 import toy.Toy;
 import neko.Neko;
+import twitchInteraction.TwitchListen;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -25,15 +26,17 @@ public class MySystemTray {
     public static CheckboxMenuItem toyItem = new CheckboxMenuItem("catch the toy");
     public static CheckboxMenuItem basketItem = new CheckboxMenuItem("Sleep to the basket");
     public static CheckboxMenuItem autonomeItem = new CheckboxMenuItem("independent kitten");
+    public static CheckboxMenuItem listenItem = new CheckboxMenuItem("chase the red pointer");
     static MenuItem exitItem = new MenuItem("Exit");
 
     Toy newToy;
-    public static enum KittyState {
+    public enum KittyState {
         CHASE,
         CATCH,
         AUTONOM,
         IDLE,
-        SLEEP
+        SLEEP,
+        LISTEN
     }
     public static KittyState kittyState = KittyState.AUTONOM;
 
@@ -44,7 +47,9 @@ public class MySystemTray {
                 basketItem.setState(false);
                 toyItem.setState(false);
                 autonomeItem.setState(false);
+                listenItem.setState(false);
                 changeSystemTrayIcon(trayIconNormal);
+                TwitchListen.twitchListen(false);
 
                 if (newToy != null) newToy.dispose();
 
@@ -56,7 +61,9 @@ public class MySystemTray {
                 basketItem.setState(false);
                 chaseItem.setState(false);
                 autonomeItem.setState(false);
+                listenItem.setState(false);
                 changeSystemTrayIcon(trayIconNormal);
+                TwitchListen.twitchListen(false);
 
                 if (newToy != null) newToy.dispose();
                 newToy = new Toy();
@@ -69,7 +76,9 @@ public class MySystemTray {
                 toyItem.setState(false);
                 chaseItem.setState(false);
                 autonomeItem.setState(false);
+                listenItem.setState(false);
                 changeSystemTrayIcon(trayIconNormal);
+                TwitchListen.twitchListen(false);
 
                 if (newToy != null) newToy.dispose();
 
@@ -80,13 +89,26 @@ public class MySystemTray {
                 basketItem.setState(false);
                 toyItem.setState(false);
                 chaseItem.setState(false);
+                listenItem.setState(false);
                 changeSystemTrayIcon(trayIconNormal);
+                TwitchListen.twitchListen(false);
 
                 if (newToy != null) newToy.dispose();
 
                 Toy.catched = true;
                 Neko.myNeko.basketReached = false;
                 kittyState = KittyState.AUTONOM;
+            }
+            if (e.getSource() == listenItem) {
+                toyItem.setState(false);
+                chaseItem.setState(false);
+                autonomeItem.setState(false);
+                changeSystemTrayIcon(trayIconNormal);
+                TwitchListen.twitchListen(true);
+
+                Toy.catched = true;
+                Neko.myNeko.basketReached = false;
+                kittyState = KittyState.LISTEN;
             }
         }
     };
@@ -98,6 +120,8 @@ public class MySystemTray {
     };
 
     public MySystemTray() {
+        listenItem.addItemListener(buttonsListener);
+
         toyItem.addItemListener(buttonsListener);
         basketItem.addItemListener(buttonsListener);
         chaseItem.addItemListener(buttonsListener);
@@ -129,6 +153,8 @@ public class MySystemTray {
             tray.add(icon);
 
             PopupMenu popup = new PopupMenu();
+            popup.add(listenItem);
+            popup.addSeparator();
             popup.add(toyItem);
             popup.add(basketItem);
             popup.add(chaseItem);
