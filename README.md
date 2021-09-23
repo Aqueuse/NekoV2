@@ -5,7 +5,7 @@
 NekoV2 is desktop kitty application. Your cat will chase his ball of yarn around the screen,
 and he will go to sleep in his basket as soon as he becomes tired.
 
-Validated on Windows 10, with java 15 & 16.
+***Validated on Windows 10, with java 15 & 16.***
 
 ## Installation 
 
