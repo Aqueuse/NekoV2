@@ -1,3 +1,20 @@
+# TODO
+
+* do a settings window :
+  * option performance : choose beetween pseudo physic toy AND dyn4j physic toy (do a truly bouncing ball with Dyn4J AND Swing)
+
+  * option assets :
+    * spawn a random cat at the beginning
+    * set the kitten asset (darkKitten gingerKitten whiteDoggyDog darkDoggyDog)
+
+    * append external neko asset GIF (choose a different kitten)
+    * append external toy asset GIF (choose a different toy)
+
+* create an installer (and manage to share openJDK17) :
+    * validate/create alternative for Linux and macOS (system tray icon ??)
+
+
+
 # NekoV2
 
 ![Neko](https://github.com/Aqueuse/NekoV2/blob/master/src/neko/images/wakeUp.GIF)
