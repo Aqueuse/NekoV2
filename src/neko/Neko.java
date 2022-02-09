@@ -49,15 +49,14 @@ public class Neko extends javax.swing.JWindow {
         setVisible(true);
 
         Timer timer = new Timer(200, e -> {
+            setVisible(true);
             switch (MySystemTray.kittyState) {
                 case CHASE:
-                    setVisible(true);
                     PointerInfo pointerInfo = MouseInfo.getPointerInfo();
                     mouseLocation = pointerInfo.getLocation();
                     moveCatToPosition(mouseLocation.x, mouseLocation.y);
                     break;
                 case CATCH:
-                    setVisible(true);
                     if (!Toy.catched) {
                         moveCatToPosition(Toy.toyPositionX, Toy.toyPositionY);
                     } else {
@@ -74,7 +73,6 @@ public class Neko extends javax.swing.JWindow {
                     }
                     break;
                 case AUTONOM:
-                    setVisible(true);
                     moveCounter = moveCounter - 1;
                     if (moveCounter < 100) {
                         randomX = ThreadLocalRandom.current().nextInt(0, screenWidth);
@@ -97,6 +95,7 @@ public class Neko extends javax.swing.JWindow {
                 default:
                     MySystemTray.kittyState = MySystemTray.KittyState.CHASE;
             }
+
         });
         timer.setRepeats(true);
         timer.start();

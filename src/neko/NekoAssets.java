@@ -21,8 +21,8 @@ public class NekoAssets {
             new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "bottom2.GIF")))
     };
     public static ImageIcon[] animateLeftTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop2.GIF")))
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop1.png"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop2.png")))
     };
     public static ImageIcon[] animateLeftBottom = {
             new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftBottom1.GIF"))),
