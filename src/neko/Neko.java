@@ -50,6 +50,10 @@ public class Neko extends javax.swing.JWindow {
 
         Timer timer = new Timer(200, e -> {
             setVisible(true);
+
+            // redraw the JWindow to clean the visual artefacts
+            setSize(31, 31);
+            setSize(32, 32);
             switch (MySystemTray.kittyState) {
                 case CHASE:
                     PointerInfo pointerInfo = MouseInfo.getPointerInfo();
@@ -145,6 +149,7 @@ public class Neko extends javax.swing.JWindow {
         else {
             sleepCounter = 0;
             setLocation(nextCoordinateX, nextCoordinateY);
+
             animateMove(theta_angle);
         }
         return destinationReached;
