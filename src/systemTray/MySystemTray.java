@@ -1,5 +1,6 @@
 package systemTray;
 
+import settings.Settings;
 import toy.Toy;
 import neko.Neko;
 import twitchInteraction.TwitchListen;
@@ -27,6 +28,9 @@ public class MySystemTray {
     public static CheckboxMenuItem basketItem = new CheckboxMenuItem("Sleep to the basket");
     public static CheckboxMenuItem autonomeItem = new CheckboxMenuItem("independent kitten");
     public static CheckboxMenuItem listenItem = new CheckboxMenuItem("chase the red pointer");
+
+    public static CheckboxMenuItem settingsItem = new CheckboxMenuItem("settings");
+
     static MenuItem exitItem = new MenuItem("Exit");
 
     Toy newToy;
@@ -43,72 +47,48 @@ public class MySystemTray {
     ItemListener buttonsListener = new ItemListener() {
         @Override
         public void itemStateChanged(ItemEvent e) {
+            changeSystemTrayIcon(trayIconNormal);
+            Toy.catched = true;
+            Neko.myNeko.basketReached = false;
+
             if (e.getSource() == chaseItem) {  // chase the mouse
-                basketItem.setState(false);
-                toyItem.setState(false);
-                autonomeItem.setState(false);
-                listenItem.setState(false);
-                changeSystemTrayIcon(trayIconNormal);
+                kittyState = KittyState.CHASE;
+                setItemState(chaseItem);
                 TwitchListen.twitchListen(false);
 
                 if (newToy != null) newToy.dispose();
-
-                Neko.myNeko.basketReached = false;
-                Toy.catched = true;
-                kittyState = KittyState.CHASE;
             }
             if (e.getSource() == toyItem) {  // catch the toy
-                basketItem.setState(false);
-                chaseItem.setState(false);
-                autonomeItem.setState(false);
-                listenItem.setState(false);
-                changeSystemTrayIcon(trayIconNormal);
+                kittyState = KittyState.CATCH;
+                setItemState(toyItem);
                 TwitchListen.twitchListen(false);
 
                 if (newToy != null) newToy.dispose();
                 newToy = new Toy();
 
-                Neko.myNeko.basketReached = false;
                 Toy.catched = false;
-                kittyState = KittyState.CATCH;
             }
             if (e.getSource() == basketItem) {  // go sleep in the basket
-                toyItem.setState(false);
-                chaseItem.setState(false);
-                autonomeItem.setState(false);
-                listenItem.setState(false);
-                changeSystemTrayIcon(trayIconNormal);
+                kittyState = KittyState.SLEEP;
+                setItemState(basketItem);
                 TwitchListen.twitchListen(false);
 
                 if (newToy != null) newToy.dispose();
-
-                Toy.catched = true;
-                kittyState = KittyState.SLEEP;
             }
             if (e.getSource() == autonomeItem) { // do what you want, don't chase the mouse
-                basketItem.setState(false);
-                toyItem.setState(false);
-                chaseItem.setState(false);
-                listenItem.setState(false);
-                changeSystemTrayIcon(trayIconNormal);
+                kittyState = KittyState.AUTONOM;
+                setItemState(autonomeItem);
                 TwitchListen.twitchListen(false);
 
                 if (newToy != null) newToy.dispose();
-
-                Toy.catched = true;
-                Neko.myNeko.basketReached = false;
-                kittyState = KittyState.AUTONOM;
             }
             if (e.getSource() == listenItem) {
-                toyItem.setState(false);
-                chaseItem.setState(false);
-                autonomeItem.setState(false);
-                changeSystemTrayIcon(trayIconNormal);
-                TwitchListen.twitchListen(true);
-
-                Toy.catched = true;
-                Neko.myNeko.basketReached = false;
                 kittyState = KittyState.LISTEN;
+                setItemState(listenItem);
+                TwitchListen.twitchListen(true);
+            }
+            if (e.getSource() == settingsItem) {
+                new Settings();
             }
         }
     };
@@ -126,6 +106,8 @@ public class MySystemTray {
         basketItem.addItemListener(buttonsListener);
         chaseItem.addItemListener(buttonsListener);
         autonomeItem.addItemListener(buttonsListener);
+
+        settingsItem.addItemListener(buttonsListener);
         exitItem.addActionListener(exitListener);
 
         autonomeItem.setState(true);
@@ -160,6 +142,7 @@ public class MySystemTray {
             popup.add(chaseItem);
             popup.add(autonomeItem);
             popup.addSeparator();
+            popup.add(settingsItem);
             popup.add(exitItem);
 
             icon.setPopupMenu(popup);
@@ -167,5 +150,15 @@ public class MySystemTray {
         catch (AWTException awtException) {
             System.out.println(awtException);
         }
+    }
+
+    public void setItemState(CheckboxMenuItem item) {
+        basketItem.setState(false);
+        toyItem.setState(false);
+        chaseItem.setState(false);
+        listenItem.setState(false);
+        autonomeItem.setState(false);
+
+        item.setState(true);
     }
 }

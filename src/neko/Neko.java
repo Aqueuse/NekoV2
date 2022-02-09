@@ -12,7 +12,6 @@ import twitchInteraction.TwitchListen;
 import static neko.NekoAssets.*;
 
 public class Neko extends javax.swing.JWindow {
-
     private int loopCounter = 0;
 
     private final javax.swing.JLabel imageLabel;
