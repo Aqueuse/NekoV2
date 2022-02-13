@@ -1,6 +1,6 @@
 package systemTray;
 
-import settings.Settings;
+import settings.SettingsJFrame;
 import toy.Toy;
 import neko.Neko;
 import twitchInteraction.TwitchListen;
@@ -88,7 +88,7 @@ public class MySystemTray {
                 TwitchListen.twitchListen(true);
             }
             if (e.getSource() == settingsItem) {
-                new Settings();
+                SettingsJFrame settings = new SettingsJFrame();
             }
         }
     };

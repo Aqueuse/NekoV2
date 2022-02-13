@@ -177,6 +177,7 @@ public class Neko extends javax.swing.JWindow {
             case "rightBottom" -> kittySprites = animateRightBottom;
         }
 
+        imageLabel.repaint();
         imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
     }
 
