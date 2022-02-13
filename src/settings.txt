@@ -1,0 +1,2 @@
+pet:Neko.png
+toy:wool.png

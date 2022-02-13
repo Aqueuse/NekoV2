@@ -1,6 +1,10 @@
 package neko;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
@@ -10,6 +14,7 @@ import toy.Toy;
 import twitchInteraction.TwitchListen;
 
 import static neko.NekoAssets.*;
+import static toy.ToyAssets.loadToyAssets;
 
 public class Neko extends javax.swing.JWindow {
     private int loopCounter = 0;
@@ -39,6 +44,10 @@ public class Neko extends javax.swing.JWindow {
         getRootPane().putClientProperty("Window.shadow", false);
         setAlwaysOnTop(true);
         this.setBackground(new Color(0, 0, 0, 0));
+
+        String[] settings = loadSettings();
+        loadPetAssets(settings[0]);
+        loadToyAssets(settings[1]);
 
         imageLabel = new javax.swing.JLabel();
         getContentPane().add(imageLabel, BorderLayout.CENTER);
@@ -207,6 +216,19 @@ public class Neko extends javax.swing.JWindow {
             loopCounter = 0;
         }
         return loopCounter;
+    }
+
+    private String[] loadSettings() {
+        String[] settings = new String[2];
+        try {
+            BufferedReader settingsFile = new BufferedReader(new FileReader(Neko.class.getProtectionDomain().getCodeSource().getLocation().getPath()+File.separator+"settings.txt"));
+            settings[0] = settingsFile.readLine().split(":")[1];
+            settings[1] = settingsFile.readLine().split(":")[1];
+        }
+        catch (IOException ioException) {
+            System.out.println("settings file not found");
+        }
+        return settings;
     }
 
     public static void main(String[] args) {

@@ -1,10 +1,26 @@
 package neko;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Objects;
 
 public class NekoAssets {
+    // settings the default pet to Neko
+    public static BufferedImage assetsImage = loadPetAssets("Neko.png");
+
+    public static BufferedImage loadPetAssets(String currentPet) {
+        try {
+            assetsImage = ImageIO.read(Objects.requireNonNull(Neko.class.getResource("images/" + currentPet)));
+        } catch (IOException ioException) {
+            System.out.println("file not found");
+        }
+        return assetsImage;
+    }
+
     public static ImageIcon[] animateLeft = {
+            // new ImageIcon(assetsImage.getSubimage(0, 0, 32, 32)),
             new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "left1.GIF"))),
             new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "left2.GIF")))
     };
@@ -21,8 +37,8 @@ public class NekoAssets {
             new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "bottom2.GIF")))
     };
     public static ImageIcon[] animateLeftTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop1.png"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop2.png")))
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop1.GIF"))),
+            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop2.GIF")))
     };
     public static ImageIcon[] animateLeftBottom = {
             new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftBottom1.GIF"))),

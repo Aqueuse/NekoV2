@@ -10,16 +10,16 @@ public class SettingsJFrame extends JFrame {
         settingsJpanel.setLayout(new BoxLayout(settingsJpanel, BoxLayout.PAGE_AXIS));
 
         JPanel petChooseLabel = singleLineLabelPanel("choose your pet", null, SwingConstants.LEFT);
-        ListWithPreviewJPanel petsJPanel = new ListWithPreviewJPanel();
-        AssetImportPanel petAssetImportPanel = new AssetImportPanel();
+        ListWithPreviewJPanel petsJPanel = new ListWithPreviewJPanel("neko/");
+        AssetImportPanel petAssetImportPanel = new AssetImportPanel("neko/");
 
         JCheckBox twitchEnableCheckBox = new JCheckBox("enable twitch integration");
 
         JPanel toyChooseLabel = singleLineLabelPanel("choose his toy", null, SwingConstants.LEFT);
-        ListWithPreviewJPanel toysJPanel = new ListWithPreviewJPanel();
-        AssetImportPanel toyAssetImportPanel = new AssetImportPanel();
+        ListWithPreviewJPanel toysJPanel = new ListWithPreviewJPanel("toy/");
+        AssetImportPanel toyAssetImportPanel = new AssetImportPanel("toy/");
 
-        JCheckBox betterPhysicCheckBox = new JCheckBox(" true physic for toy (consumes more CPU)");
+        JCheckBox betterPhysicCheckBox = new JCheckBox("<html>true physic for toy<br>(consumes more CPU)</html>");
 
         JPanel creditLabel = singleLineLabelPanel("credits", null, SwingConstants.CENTER);
         JPanel pyairvanderLabel = singleLineLabelPanel("Rufo assets by Pyairvander", null, SwingConstants.CENTER);
@@ -43,7 +43,8 @@ public class SettingsJFrame extends JFrame {
         settingsJpanel.add(pyairvanderLink);
 
         this.getContentPane().add(settingsJpanel);
-        this.setSize(500,500);
+        this.setSize(400,500);
+        this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -62,16 +63,18 @@ public class SettingsJFrame extends JFrame {
 
         switch (swingConstants) { // left
             case 2, default -> { // default is left
+                jPanel.add(Box.createRigidArea(new Dimension(20, 0)));
                 jPanel.add(jLabel);
                 jPanel.add(Box.createHorizontalGlue());
             }
             case 0 -> { // center
-                jPanel.add(Box.createRigidArea(new Dimension(100, 0)));
+                jPanel.add(Box.createRigidArea(new Dimension(50, 0)));
                 jPanel.add(jLabel);
             }
             case 4 -> { // right
                 jPanel.add(Box.createHorizontalGlue());
                 jPanel.add(jLabel);
+                jPanel.add(Box.createRigidArea(new Dimension(20, 0)));
             }
         }
         return jPanel;

@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 
 public class LinkLabel extends JLabel {
     public LinkLabel (String text, String URL) {
-        setText(text);
+        setText("<HTML><U>"+text+"</U></HTML>");
         setForeground(Color.BLUE.darker());
         setCursor(new Cursor(Cursor.HAND_CURSOR));
 
