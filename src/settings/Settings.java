@@ -1,33 +1,31 @@
 package settings;
 
-import neko.Neko;
-import toy.Toy;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
 
-public class Settings {
-    public static String currentPetAsset = "Neko.png";
-    public static String currentToyAsset = "wool.png";
+import neko.Neko;
+import toy.Toy;
 
-    public String loadKeyFromSettings(String key) throws IOException {
-        File settingsFile = new File(Objects.requireNonNull(Neko.class.getProtectionDomain().getClassLoader().getResource("settings.txt")).getPath());
+public class Settings {
+    public static String loadKeyFromSettings(String key) {
         String value = "";
 
-        Scanner scanner = new Scanner(new FileReader(settingsFile));
         try {
+            File settingsFile = new File(Objects.requireNonNull(Neko.class.getProtectionDomain().getClassLoader().getResource("settings.txt")).getPath());
+
+            Scanner scanner = new Scanner(new FileReader(settingsFile));
             while (scanner.hasNext()) {
                 String[] line = scanner.nextLine().split(":");
                 if (line[0].equals(key)) value = line[1];
             }
+            scanner.close();
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (IOException ioException) {
+            ioException.printStackTrace();
         }
-        scanner.close();
         return value;
     }
 
@@ -39,7 +37,6 @@ public class Settings {
         bufferedReader.close();
 
         for (int i=0; i<settings.length; i++) {
-            System.out.println(settings[i].toString());
             if (settings[i].toString().split(":")[0].equals(key)) {
                 settings[i] = key+":"+value;
             }

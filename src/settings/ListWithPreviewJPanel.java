@@ -1,11 +1,8 @@
 package settings;
 
-import neko.Neko;
-import neko.NekoAssets;
-import toy.ToyAssets;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +13,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static settings.Settings.*;
+import neko.Neko;
+import neko.NekoAssets;
+import toy.ToyAssets;
 
 public class ListWithPreviewJPanel extends JPanel {
     Map<String, ImageIcon> assetsMap = new HashMap<>();
@@ -34,22 +33,23 @@ public class ListWithPreviewJPanel extends JPanel {
         assetsJList.setSelectedIndex(getAssetJListIndex(assetsDirectory.split("/")[0], assetsList));
 
         JLabel assetLabel = new JLabel();
-        if (assetsDirectory.equals("neko/")) assetLabel.setIcon(assetsMap.get(currentPetAsset));
-        if (assetsDirectory.equals("toy/")) assetLabel.setIcon(assetsMap.get(currentToyAsset));
+        if (assetsDirectory.equals("neko/")) assetLabel.setIcon(assetsMap.get(Settings.loadKeyFromSettings("pet")));
+        if (assetsDirectory.equals("toy/")) assetLabel.setIcon(assetsMap.get(Settings.loadKeyFromSettings("toy")));
 
         this.add(assetsJList);
+        this.add(Box.createRigidArea(new Dimension(20, 0)));
         this.add(assetLabel);
 
         assetsJList.addListSelectionListener(e -> {
             try {
                 if (assetsDirectory.equals("neko/")) {
                     Neko.settings.writeSettings("pet", assetsList[assetsJList.getSelectedIndex()]);
-                    assetLabel.setIcon(assetsMap.get(currentPetAsset));
+                    assetLabel.setIcon(assetsMap.get(Settings.loadKeyFromSettings("pet")));
                     NekoAssets.nekoAssetsImage = Neko.settings.getAssetFromSettings("pet");
                 }
                 if (assetsDirectory.equals("toy/")) {
                     Neko.settings.writeSettings("toy", assetsList[assetsJList.getSelectedIndex()]);
-                    assetLabel.setIcon(assetsMap.get(currentToyAsset));
+                    assetLabel.setIcon(assetsMap.get(Settings.loadKeyFromSettings("toy")));
                     ToyAssets.toyAssetsImage = Neko.settings.getAssetFromSettings("toy");
                 }
             } catch (IOException ex) {
@@ -93,7 +93,7 @@ public class ListWithPreviewJPanel extends JPanel {
     }
 
     public Integer getAssetJListIndex(String assetDirectory, String[] assets) {
-        String setting = assetDirectory.equals("toy") ? (currentToyAsset):(currentPetAsset);
+        String setting = assetDirectory.equals("toy") ? (Settings.loadKeyFromSettings("toy")):(Settings.loadKeyFromSettings("pet"));
         for (int i = 0; i < assets.length; i++) {
             if (assets[i].equals(setting)) {
                 return i;
