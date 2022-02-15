@@ -9,8 +9,6 @@ import systemTray.MySystemTray;
 import toy.Toy;
 import twitchInteraction.TwitchListen;
 
-import static neko.NekoAssets.*;
-
 public class Neko extends javax.swing.JWindow {
     private int loopCounter = 0;
 
@@ -138,7 +136,7 @@ public class Neko extends javax.swing.JWindow {
                 animateScratch("bottom");
             }
             if (nekoX > 0 && nekoX < screenWidth - 32 &&
-                nekoY > 0 && nekoY < screenHeight - 32) {
+                    nekoY > 0 && nekoY < screenHeight - 32) {
                 sleepCounter = sleepCounter + 1;
                 if (sleepCounter < 14) animatePrepareToSleep();
                 if (sleepCounter >= 14) {
@@ -168,14 +166,14 @@ public class Neko extends javax.swing.JWindow {
         if (theta > -3 * pi / 8 && theta < -pi / 8) orientation = "rightBottom";
 
         switch (orientation) {
-            case "left" -> kittySprites = animateLeft;
-            case "right" -> kittySprites = animateRight;
-            case "top" -> kittySprites = animateTop;
-            case "bottom" -> kittySprites = animateBottom;
-            case "leftTop" -> kittySprites = animateLeftTop;
-            case "leftBottom" -> kittySprites = animateLeftBottom;
-            case "rightTop" -> kittySprites = animateRightTop;
-            case "rightBottom" -> kittySprites = animateRightBottom;
+            case "left" -> kittySprites = NekoAssets.animateLeft();
+            case "right" -> kittySprites = NekoAssets.animateRight();
+            case "top" -> kittySprites = NekoAssets.animateTop();
+            case "bottom" -> kittySprites = NekoAssets.animateBottom();
+            case "leftTop" -> kittySprites = NekoAssets.animateLeftTop();
+            case "leftBottom" -> kittySprites = NekoAssets.animateLeftBottom();
+            case "rightTop" -> kittySprites = NekoAssets.animateRightTop();
+            case "rightBottom" -> kittySprites = NekoAssets.animateRightBottom();
         }
 
         imageLabel.repaint();
@@ -184,21 +182,21 @@ public class Neko extends javax.swing.JWindow {
 
     private void animateScratch(String kittyPosition) {
         switch (kittyPosition) {
-            case "left" -> kittySprites = animateScratchLeft;
-            case "right" -> kittySprites = animateScratchRight;
-            case "top" -> kittySprites = animateScratchTop;
-            case "bottom" -> kittySprites = animateScratchBottom;
+            case "left" -> kittySprites = NekoAssets.animateScratchLeft();
+            case "right" -> kittySprites = NekoAssets.animateScratchRight();
+            case "top" -> kittySprites = NekoAssets.animateScratchTop();
+            case "bottom" -> kittySprites = NekoAssets.animateScratchBottom();
         }
         imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
     }
 
     private void animatePrepareToSleep() {
-        kittySprites = animatePrepareToSleep;
+        kittySprites = NekoAssets.animatePrepareToSleep();
         imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
     }
 
     private void animateSleep() {
-        kittySprites = animateSleep;
+        kittySprites = NekoAssets.animateSleep();
         imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
     }
 

@@ -6,8 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import neko.Neko;
 
-import static toy.ToyAssets.toySprites;
-
 public class Toy extends JWindow {
     JLabel imageLabel = new JLabel();
 
@@ -26,10 +24,13 @@ public class Toy extends JWindow {
     Timer animateTimer;
     Timer moveTimer;
 
+    ImageIcon[] toySprites;
+
     public Toy() {
         getRootPane().putClientProperty("Window.shadow", false);
         this.add(imageLabel);
 
+        toySprites = ToyAssets.toySprites();
         imageLabel.setIcon(toySprites[0]);
 
         this.getContentPane().add(imageLabel, BorderLayout.CENTER);

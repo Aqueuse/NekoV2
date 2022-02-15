@@ -25,6 +25,9 @@ public class SettingsJFrame extends JFrame {
         JPanel pyairvanderLabel = singleLineLabelPanel("Rufo assets by Pyairvander", null, SwingConstants.CENTER);
         JPanel pyairvanderLink = singleLineLabelPanel("pierre-vandermaesen.itch.io", "https://pierre-vandermaesen.itch.io/", SwingConstants.CENTER);
 
+        JPanel hbellahcLabel = singleLineLabelPanel("Dynamic Neko refresh by Hbellahc", null, SwingConstants.CENTER);
+        JPanel hbellahcLink = singleLineLabelPanel("https://github.com/hbellahc", "https://github.com/hbellahc", SwingConstants.CENTER);
+
         settingsJpanel.add(Box.createRigidArea(new Dimension(0, 20)));
         settingsJpanel.add(petChooseLabel);
         settingsJpanel.add(petsJPanel);
@@ -41,9 +44,12 @@ public class SettingsJFrame extends JFrame {
         settingsJpanel.add(creditLabel);
         settingsJpanel.add(pyairvanderLabel);
         settingsJpanel.add(pyairvanderLink);
+        settingsJpanel.add(hbellahcLabel);
+        settingsJpanel.add(hbellahcLink);
+        settingsJpanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
         this.getContentPane().add(settingsJpanel);
-        this.setSize(400,500);
+        this.setSize(400,580);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -61,8 +67,8 @@ public class SettingsJFrame extends JFrame {
             jLabel = new LinkLabel(text, link);
         }
 
-        switch (swingConstants) { // left
-            case 2, default -> { // default is left
+        switch (swingConstants) {
+            case 2 -> { // left
                 jPanel.add(Box.createRigidArea(new Dimension(20, 0)));
                 jPanel.add(jLabel);
                 jPanel.add(Box.createHorizontalGlue());
@@ -79,6 +85,4 @@ public class SettingsJFrame extends JFrame {
         }
         return jPanel;
     }
-
-
 }

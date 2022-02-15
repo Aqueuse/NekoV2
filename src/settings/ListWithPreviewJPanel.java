@@ -2,6 +2,7 @@ package settings;
 
 import neko.Neko;
 import neko.NekoAssets;
+import toy.ToyAssets;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -49,7 +50,7 @@ public class ListWithPreviewJPanel extends JPanel {
                 if (assetsDirectory.equals("toy/")) {
                     Neko.settings.writeSettings("toy", assetsList[assetsJList.getSelectedIndex()]);
                     assetLabel.setIcon(assetsMap.get(currentToyAsset));
-                    NekoAssets.nekoAssetsImage = Neko.settings.getAssetFromSettings("toy");
+                    ToyAssets.toyAssetsImage = Neko.settings.getAssetFromSettings("toy");
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
