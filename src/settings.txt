@@ -1,2 +1,3 @@
 pet:Neko.png
 toy:wool.png
+physic:simple

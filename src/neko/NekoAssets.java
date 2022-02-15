@@ -1,103 +1,88 @@
 package neko;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
+import javax.swing.*;
 
 public class NekoAssets {
-    // settings the default pet to Neko
-    public static BufferedImage assetsImage = loadPetAssets("Neko.png");
-
-    public static BufferedImage loadPetAssets(String currentPet) {
-        try {
-            assetsImage = ImageIO.read(Objects.requireNonNull(Neko.class.getResource("images/" + currentPet)));
-        } catch (IOException ioException) {
-            System.out.println("file not found");
-        }
-        return assetsImage;
-    }
+    public static BufferedImage nekoAssetsImage = Neko.settings.getAssetFromSettings("pet");
 
     public static ImageIcon[] animateLeft = {
-            // new ImageIcon(assetsImage.getSubimage(0, 0, 32, 32)),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "left1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "left2.GIF")))
+             new ImageIcon(nekoAssetsImage.getSubimage(0, 96, 32, 32)),
+             new ImageIcon(nekoAssetsImage.getSubimage(32, 96, 32, 32))
     };
     public static ImageIcon[] animateRight = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "right1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "right2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 96, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 96, 32, 32))
     };
     public static ImageIcon[] animateTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "top1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "top2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 64, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 64, 32, 32))
     };
     public static ImageIcon[] animateBottom = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "bottom1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "bottom2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 64, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 64, 32, 32))
     };
     public static ImageIcon[] animateLeftTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftTop2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 128, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 128, 32, 32))
     };
     public static ImageIcon[] animateLeftBottom = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftBottom1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "leftBottom2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 160, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 160, 32, 32))
     };
     public static ImageIcon[] animateRightTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightTop1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightTop2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 128, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 128, 32, 32))
     };
     public static ImageIcon[] animateRightBottom = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightBottom1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "rightBottom2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 160, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 160, 32, 32))
     };
 
     public static ImageIcon[] animateScratchLeft = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchLeft1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchLeft2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 224, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 224, 32, 32))
     };
     public static ImageIcon[] animateScratchRight = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchRight1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchRight2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 224, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 224, 32, 32))
     };
     public static ImageIcon[] animateScratchTop = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchTop1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchTop2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 192, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 192, 32, 32)) // inverted but is okay
     };
     public static ImageIcon[] animateScratchBottom = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchBottom1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "scratchBottom2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 192, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 192, 32, 32))
     };
 
     public static ImageIcon[] animatePrepareToSleep = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "await2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "lick2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "baille.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(96, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 0, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(0, 32, 32, 32))
     };
     public static ImageIcon[] animateSleep = {
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep1.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF"))),
-            new ImageIcon(Objects.requireNonNull(Neko.class.getResource("images/" + "sleep2.GIF")))
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(64, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 32, 32, 32)),
+            new ImageIcon(nekoAssetsImage.getSubimage(32, 32, 32, 32))
     };
-
 }

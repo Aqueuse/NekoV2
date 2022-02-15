@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import neko.Neko;
+
 import static toy.ToyAssets.toySprites;
 
 public class Toy extends JWindow {
@@ -140,5 +141,4 @@ public class Toy extends JWindow {
             toyPositionY = toyPositionY - 15;
         }
     }
-
 }

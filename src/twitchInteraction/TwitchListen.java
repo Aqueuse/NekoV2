@@ -18,7 +18,6 @@ public class TwitchListen extends WebSocketClient {
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         send("connect");
-        System.out.println("connected");
     }
 
     @Override

@@ -1,26 +1,19 @@
 package toy;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import neko.Neko;
+
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
+import javax.swing.*;
 
 public class ToyAssets {
-    public static BufferedImage assetsImage;
-    public static void loadToyAssets(String currentToy) {
-        try {
-            assetsImage = ImageIO.read(Objects.requireNonNull(Toy.class.getResource("images/" + currentToy)));
-        } catch (IOException ioException) {
-            System.out.println("file not found");
-        }
-    }
+static BufferedImage toyAssetsImage = Neko.settings.getAssetFromSettings("toy");
+
     public static ImageIcon[] toySprites = {
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool1.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool2.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool3.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool4.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool5.png"))),
-            new ImageIcon(Objects.requireNonNull(Toy.class.getResource("images/" + "wool6.png"))),
+        new ImageIcon(toyAssetsImage.getSubimage(0, 0, 32, 32)),
+        new ImageIcon(toyAssetsImage.getSubimage(32, 0, 32, 32)),
+        new ImageIcon(toyAssetsImage.getSubimage(64, 0, 32, 32)),
+        new ImageIcon(toyAssetsImage.getSubimage(96, 0, 32, 32)),
+        new ImageIcon(toyAssetsImage.getSubimage(128, 0, 32, 32)),
+        new ImageIcon(toyAssetsImage.getSubimage(160, 0, 32, 32))
     };
 }

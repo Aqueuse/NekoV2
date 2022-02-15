@@ -79,4 +79,6 @@ public class SettingsJFrame extends JFrame {
         }
         return jPanel;
     }
+
+
 }
