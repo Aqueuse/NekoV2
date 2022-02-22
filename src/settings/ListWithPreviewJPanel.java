@@ -13,55 +13,55 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import neko.Neko;
-import neko.NekoAssets;
+import pet.PetAssets;
+import systemTray.MySystemTray;
 import toy.ToyAssets;
+import static systemTray.MySystemTray.getAssetFromSettings;
 
 public class ListWithPreviewJPanel extends JPanel {
-    Map<String, ImageIcon> assetsMap = new HashMap<>();
     String[] assetsList;
-
-    public ListWithPreviewJPanel(String assetsDirectory) {
-        final File assetsPath = new File(
-                ListWithPreviewJPanel.class.getProtectionDomain().getCodeSource().getLocation().getPath() +
-                File.separatorChar + assetsDirectory + File.separatorChar + "images"
-        );
-
-        repopulateAssetsList(assetsPath.getAbsolutePath());
-
-        JList<String> assetsJList = new JList<>(assetsList);
-        assetsJList.setSelectedIndex(getAssetJListIndex(assetsDirectory.split("/")[0], assetsList));
+    JList<String> assetsJList;
+    public ListWithPreviewJPanel(String assetsPath, String assetType) {
+        assetsJList = new JList<>();
+        assetsList = getAssetsList(assetsPath);
+        assetsJList = repopulatedAssetsJList(assetsPath);
+        assetsJList.setSelectedIndex(getAssetJListIndex(assetType, assetsList));
 
         JLabel assetLabel = new JLabel();
-        if (assetsDirectory.equals("neko/")) assetLabel.setIcon(assetsMap.get(Settings.loadKeyFromSettings("pet")));
-        if (assetsDirectory.equals("toy/")) assetLabel.setIcon(assetsMap.get(Settings.loadKeyFromSettings("toy")));
+        String savedAssetPath = assetsPath + File.separatorChar + assetsList[assetsJList.getSelectedIndex()];
+        assetLabel.setIcon(new ImageIcon(getAssetSubImage(new File(savedAssetPath))));
 
         this.add(assetsJList);
         this.add(Box.createRigidArea(new Dimension(20, 0)));
         this.add(assetLabel);
 
         assetsJList.addListSelectionListener(e -> {
-            try {
-                if (assetsDirectory.equals("neko/")) {
-                    Neko.settings.writeSettings("pet", assetsList[assetsJList.getSelectedIndex()]);
-                    assetLabel.setIcon(assetsMap.get(Settings.loadKeyFromSettings("pet")));
-                    NekoAssets.nekoAssetsImage = Neko.settings.getAssetFromSettings("pet");
+            if (!e.getValueIsAdjusting()) { // This line prevents double events
+                try {
+                    assetsList = getAssetsList(assetsPath);
+                    MySystemTray.writeSettings(assetType, assetsList[assetsJList.getSelectedIndex()]);
+
+                    String newAssetPath = assetsPath + File.separatorChar + assetsList[assetsJList.getSelectedIndex()];
+                    assetLabel.setIcon(new ImageIcon(getAssetSubImage(new File(newAssetPath))));
+
+                    if (assetType.equals("pet")) {
+                        PetAssets.petAssetsImage = getAssetFromSettings(assetType);
+                        MySystemTray.trayIcon.setImage(PetAssets.preview());
+                    }
+                    if (assetType.equals("toy")) {
+                        ToyAssets.toyAssetsImage = getAssetFromSettings(assetType);
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-                if (assetsDirectory.equals("toy/")) {
-                    Neko.settings.writeSettings("toy", assetsList[assetsJList.getSelectedIndex()]);
-                    assetLabel.setIcon(assetsMap.get(Settings.loadKeyFromSettings("toy")));
-                    ToyAssets.toyAssetsImage = Neko.settings.getAssetFromSettings("toy");
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
             }
         });
     }
 
-    public void repopulateAssetsList(String absoluteAssetsPath) {
+    public String[] getAssetsList(String assetsDirectory) {
         Set<String> filesSet = new HashSet<>();
 
-        try (Stream<Path> stream = Files.walk(Paths.get(absoluteAssetsPath), 1)) {
+        try (Stream<Path> stream = Files.walk(Paths.get(assetsDirectory), 1)) {
             filesSet = stream
                     .filter(file -> !Files.isDirectory(file))
                     .map(Path::getFileName)
@@ -72,15 +72,17 @@ public class ListWithPreviewJPanel extends JPanel {
             System.out.println("directory not found");
         }
 
-        filesSet.forEach(file -> {
-            if (file.endsWith(".png")) {
-                assetsMap.put(file, getPreviewFromAssetFile(new File(absoluteAssetsPath + File.separatorChar + file)));
-            }
-        });
         assetsList = filesSet.toArray(new String[0]);
+        return assetsList;
     }
 
-    public ImageIcon getPreviewFromAssetFile(File assetFile) {
+    public JList<String> repopulatedAssetsJList(String assetsDirectory) {
+        String[] assetsList = getAssetsList(assetsDirectory);
+        assetsJList.setListData(assetsList);
+        return assetsJList;
+    }
+
+    public BufferedImage getAssetSubImage(File assetFile) {
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(assetFile).getSubimage(0, 0, 32, 32);
@@ -89,11 +91,11 @@ public class ListWithPreviewJPanel extends JPanel {
             System.out.println("file not found");
         }
         assert bufferedImage != null;
-        return new ImageIcon(bufferedImage);
+        return bufferedImage;
     }
 
     public Integer getAssetJListIndex(String assetDirectory, String[] assets) {
-        String setting = assetDirectory.equals("toy") ? (Settings.loadKeyFromSettings("toy")):(Settings.loadKeyFromSettings("pet"));
+        String setting = assetDirectory.equals("toy") ? (MySystemTray.loadKeyFromSettings("toy")):(MySystemTray.loadKeyFromSettings("pet"));
         for (int i = 0; i < assets.length; i++) {
             if (assets[i].equals(setting)) {
                 return i;

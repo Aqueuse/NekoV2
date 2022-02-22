@@ -2,9 +2,10 @@ package toy;
 
 import java.awt.*;
 import javax.swing.*;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import neko.Neko;
+import pet.Pet;
 
 public class Toy extends JWindow {
     JLabel imageLabel = new JLabel();
@@ -20,6 +21,9 @@ public class Toy extends JWindow {
     public static int toyPositionX = ThreadLocalRandom.current().nextInt(0, screenWidth);
     public static int toyPositionY = ThreadLocalRandom.current().nextInt(0, screenHeight);
     public static boolean catched = false;
+
+    int curvature = 14;
+    Random random = new Random();
 
     Timer animateTimer;
     Timer moveTimer;
@@ -59,8 +63,8 @@ public class Toy extends JWindow {
 
     private void startBounceToy() {
         moveTimer = new Timer(200, e -> {
-            boolean reachedX = Neko.myNeko.getX() >= getX()-16 && Neko.myNeko.getX() <= getX()+16;
-            boolean reachedY = Neko.myNeko.getY() >= getY()-16 && Neko.myNeko.getY() <= getY()+16;
+            boolean reachedX = Pet.myNeko.getX() >= getX()-16 && Pet.myNeko.getX() <= getX()+16;
+            boolean reachedY = Pet.myNeko.getY() >= getY()-16 && Pet.myNeko.getY() <= getY()+16;
             if (reachedX && reachedY) {
                 catched = true;
             }
@@ -68,18 +72,22 @@ public class Toy extends JWindow {
                 setLocation(toyPositionX, toyPositionY);
 
                 if (direction == ToyDirection.TOPLEFT) {
+                    curvature = random.nextInt(0, 4)+14;
                     moveTopLeft();
                 }
 
                 if (direction == ToyDirection.TOPRIGHT) {
+                    curvature = random.nextInt(0, 4)+14;
                     moveTopRight();
                 }
 
                 if (direction == ToyDirection.BOTTOMLEFT) {
+                    curvature = random.nextInt(0, 4)+14;
                     moveBottomLeft();
                 }
 
                 if (direction == ToyDirection.BOTTOMRIGHT) {
+                    curvature = random.nextInt(0, 4)+14;
                     moveBottomRight();
                 }
             }
@@ -100,8 +108,8 @@ public class Toy extends JWindow {
         if (toyPositionY <= 0) {
             direction = ToyDirection.BOTTOMRIGHT;
         } else {
-            toyPositionX = toyPositionX + 15;
-            toyPositionY = toyPositionY - 15;
+            toyPositionX = toyPositionX + curvature;
+            toyPositionY = toyPositionY - 16;
         }
     }
 
@@ -113,8 +121,8 @@ public class Toy extends JWindow {
         if (toyPositionY >= screenHeight) {
             direction = ToyDirection.TOPRIGHT;
         } else {
-            toyPositionX = toyPositionX + 15;
-            toyPositionY = toyPositionY + 15;
+            toyPositionX = toyPositionX + curvature;
+            toyPositionY = toyPositionY + 16;
         }
     }
 
@@ -126,8 +134,8 @@ public class Toy extends JWindow {
         if (toyPositionY >= screenHeight) {
             direction = ToyDirection.TOPLEFT;
         } else {
-            toyPositionX = toyPositionX - 15;
-            toyPositionY = toyPositionY + 15;
+            toyPositionX = toyPositionX - curvature;
+            toyPositionY = toyPositionY + 16;
         }
     }
 
@@ -138,8 +146,8 @@ public class Toy extends JWindow {
         if (toyPositionY <= 0) {
             direction = ToyDirection.BOTTOMLEFT;
         } else {
-            toyPositionX = toyPositionX - 15;
-            toyPositionY = toyPositionY - 15;
+            toyPositionX = toyPositionX - curvature;
+            toyPositionY = toyPositionY - 16;
         }
     }
 }
