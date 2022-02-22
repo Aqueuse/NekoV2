@@ -4,14 +4,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.*;
 
-import systemTray.MySystemTray;
+import settings.SettingsFileManagement;
 
 public class ToyAssets {
     public static BufferedImage toyAssetsImage;
 
     static {
         try {
-            toyAssetsImage = MySystemTray.getAssetFromSettings("toy");
+            toyAssetsImage = SettingsFileManagement.getAssetFromSettings("toy");
         } catch (IOException e) {
             e.printStackTrace();
         }

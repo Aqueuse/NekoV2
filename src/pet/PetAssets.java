@@ -5,14 +5,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import systemTray.MySystemTray;
+import settings.SettingsFileManagement;
 
 public class PetAssets {
     public static BufferedImage petAssetsImage;
 
     static {
         try {
-            petAssetsImage = MySystemTray.getAssetFromSettings("pet");
+            petAssetsImage = SettingsFileManagement.getAssetFromSettings("pet");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,29 +1,21 @@
 package systemTray;
 
+import init.Init;
 import pet.PetAssets;
 import settings.SettingsJFrame;
 import toy.Toy;
-import pet.Pet;
 import twitchInteraction.TwitchListen;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Objects;
-import java.util.Scanner;
+
+import static settings.SettingsFileManagement.getAssetFromSettings;
+import static settings.SettingsFileManagement.loadKeyFromSettings;
 
 public class MySystemTray {
-    public static File settingsFile = new File(Objects.requireNonNull(MySystemTray.class.getProtectionDomain().getClassLoader().getResource("settings.txt")).getPath());
-    public static String petAssetsPath = new File(MySystemTray.class.getProtectionDomain().getCodeSource().getLocation().getPath() + File.separatorChar + "pet/" + File.separatorChar + "images" + File.separatorChar).getAbsolutePath();
-    public static String toyAssetsPath = new File(MySystemTray.class.getProtectionDomain().getCodeSource().getLocation().getPath() + File.separatorChar + "toy/" + File.separatorChar + "images" + File.separatorChar).getAbsolutePath();
-
-    static File defaultPetFile = new File(petAssetsPath + File.separatorChar + "Neko.png");
-    static File defaultToyFile = new File(toyAssetsPath + File.separatorChar + "wool.png");
-
     final static SystemTray tray = SystemTray.getSystemTray();
     public static TrayIcon trayIcon = null;
 
@@ -94,8 +86,8 @@ public class MySystemTray {
     ItemListener buttonsListener = new ItemListener() {
         @Override
         public void itemStateChanged(ItemEvent e) {
-            Pet.myNeko.basketReached = false;
-            Pet.myNeko.setVisible(true);
+            Init.myNeko.basketReached = false;
+            Init.myNeko.setVisible(true);
             TwitchListen.twitchListen(false);
             if (newToy != null) newToy.dispose();
             Toy.catched = true;
@@ -176,59 +168,5 @@ public class MySystemTray {
             menuItem.setState(false);
         }
         item.setState(true);
-    }
-
-    public static String loadKeyFromSettings(String key) {
-        String value = "";
-        try {
-            Scanner scanner = new Scanner(new FileReader(settingsFile));
-            while (scanner.hasNext()) {
-                String[] line = scanner.nextLine().split(":");
-                if (line[0].equals(key)) value = line[1];
-            }
-            scanner.close();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        return value;
-    }
-
-    public static void writeSettings(String key, String value) {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(Objects.requireNonNull(settingsFile)));
-            Object[] settings = bufferedReader.lines().toArray();
-            bufferedReader.close();
-
-            for (int i = 0; i < settings.length; i++) {
-                if (settings[i].toString().split(":")[0].equals(key)) {
-                    settings[i] = key + ":" + value;
-                }
-            }
-
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Objects.requireNonNull(settingsFile), false));
-
-            for (Object setting : settings) {
-                bufferedWriter.write(setting.toString() + System.lineSeparator());
-            }
-            bufferedWriter.close();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
-
-    public static BufferedImage getAssetFromSettings(String assetType) throws IOException {
-        String asset = loadKeyFromSettings(assetType);
-
-        if (assetType.equals("pet")) {
-            File assetFile = new File(petAssetsPath + File.separatorChar + asset);
-            if (!assetFile.exists()) {
-                return ImageIO.read(defaultPetFile);
-            } else return ImageIO.read(assetFile);
-        } else {
-            File assetFile = new File(toyAssetsPath + File.separatorChar + asset);
-            if (!assetFile.exists()) {
-                return ImageIO.read(defaultToyFile);
-            } else return ImageIO.read(assetFile);
-        }
     }
 }

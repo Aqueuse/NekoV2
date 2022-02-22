@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import pet.PetAssets;
 import systemTray.MySystemTray;
 import toy.ToyAssets;
-import static systemTray.MySystemTray.getAssetFromSettings;
+import static settings.SettingsFileManagement.getAssetFromSettings;
 
 public class ListWithPreviewJPanel extends JPanel {
     String[] assetsList;
@@ -39,7 +39,8 @@ public class ListWithPreviewJPanel extends JPanel {
             if (!e.getValueIsAdjusting()) { // This line prevents double events
                 try {
                     assetsList = getAssetsList(assetsPath);
-                    MySystemTray.writeSettings(assetType, assetsList[assetsJList.getSelectedIndex()]);
+                    if (assetsJList.getSelectedIndex() == -1) assetsJList.setSelectedIndex(0);
+                    SettingsFileManagement.writeSettings(assetType, assetsList[assetsJList.getSelectedIndex()]);
 
                     String newAssetPath = assetsPath + File.separatorChar + assetsList[assetsJList.getSelectedIndex()];
                     assetLabel.setIcon(new ImageIcon(getAssetSubImage(new File(newAssetPath))));
@@ -95,7 +96,7 @@ public class ListWithPreviewJPanel extends JPanel {
     }
 
     public Integer getAssetJListIndex(String assetDirectory, String[] assets) {
-        String setting = assetDirectory.equals("toy") ? (MySystemTray.loadKeyFromSettings("toy")):(MySystemTray.loadKeyFromSettings("pet"));
+        String setting = assetDirectory.equals("toy") ? (SettingsFileManagement.loadKeyFromSettings("toy")):(SettingsFileManagement.loadKeyFromSettings("pet"));
         for (int i = 0; i < assets.length; i++) {
             if (assets[i].equals(setting)) {
                 return i;
@@ -104,4 +105,3 @@ public class ListWithPreviewJPanel extends JPanel {
         return 0;
     }
 }
-

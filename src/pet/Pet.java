@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import settings.SettingsFileManagement;
 import systemTray.MySystemTray;
 import toy.Toy;
 import twitchInteraction.TwitchListen;
@@ -27,15 +28,13 @@ public class Pet extends javax.swing.JWindow {
 
     public boolean basketReached = false;
 
-    public static Pet myNeko;
-    public static MySystemTray mySystemTray;
     public static Timer timer;
 
     public static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
     public static final int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
     public Pet() {
-        int delay = Integer.parseInt(MySystemTray.loadKeyFromSettings("petDelay"));
+        int delay = Integer.parseInt(SettingsFileManagement.loadKeyFromSettings("petDelay"));
 
         getRootPane().putClientProperty("Window.shadow", false);
         setAlwaysOnTop(true);
@@ -205,12 +204,5 @@ public class Pet extends javax.swing.JWindow {
             loopCounter = 0;
         }
         return loopCounter;
-    }
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            mySystemTray = new MySystemTray();
-            myNeko = new Pet();
-        });
     }
 }

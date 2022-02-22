@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import pet.Pet;
+import init.Init;
 
 public class Toy extends JWindow {
     JLabel imageLabel = new JLabel();
@@ -63,8 +63,8 @@ public class Toy extends JWindow {
 
     private void startBounceToy() {
         moveTimer = new Timer(200, e -> {
-            boolean reachedX = Pet.myNeko.getX() >= getX()-16 && Pet.myNeko.getX() <= getX()+16;
-            boolean reachedY = Pet.myNeko.getY() >= getY()-16 && Pet.myNeko.getY() <= getY()+16;
+            boolean reachedX = Init.myNeko.getX() >= getX()-16 && Init.myNeko.getX() <= getX()+16;
+            boolean reachedY = Init.myNeko.getY() >= getY()-16 && Init.myNeko.getY() <= getY()+16;
             if (reachedX && reachedY) {
                 catched = true;
             }

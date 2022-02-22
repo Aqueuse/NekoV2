@@ -7,6 +7,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
 import org.json.*;
+import static settings.TwitchJPanel.channelID;
 
 public class TwitchListen extends WebSocketClient {
     public TwitchListen(URI serverURI) {
@@ -48,7 +49,7 @@ public class TwitchListen extends WebSocketClient {
     public static void twitchListen(boolean listen) {
         try {
             TwitchListen clientWebSocket = new TwitchListen(new URI(
-                    "wss://heat-api.j38.net/channel/462818643"));
+                    "wss://heat-api.j38.net/channel/"+channelID));
 
             if (listen) {
                 clientWebSocket.connect();

@@ -11,14 +11,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import static systemTray.MySystemTray.petAssetsPath;
-import static systemTray.MySystemTray.toyAssetsPath;
+import static init.Init.petAssetsPath;
+import static init.Init.toyAssetsPath;
 
 public class AssetImportPanel extends JPanel {
     public AssetImportPanel(String assetsDirectory, String assetType) {
         JButton importAssetButton = new JButton("import");
         JLabel feedbackLabel = new JLabel();
-        JLabel helpImportLabel = new LinkLabel("file format", "https://ours-agile.com/projets/neko/neko.html");
 
         importAssetButton.addActionListener(e -> {
             JFileChooser assetJFileChooser = new JFileChooser();
@@ -28,18 +27,15 @@ public class AssetImportPanel extends JPanel {
             if(returnVal == JFileChooser.APPROVE_OPTION) {
                 File assetFile = new File(assetJFileChooser.getSelectedFile().getAbsolutePath());
                 String copyResult = copyAssetToAssetDirectory(assetFile, assetType);
-                if (assetType.equals("pet")) SettingsJFrame.petsJPanel.repopulatedAssetsJList(assetsDirectory);
-                if (assetType.equals("toy")) SettingsJFrame.toysJPanel.repopulatedAssetsJList(assetsDirectory);
+                if (assetType.equals("pet")) SettingsJFrame.petsListWithPreviewJPanel.repopulatedAssetsJList(assetsDirectory);
+                if (assetType.equals("toy")) SettingsJFrame.toysListWithPreviewJPanel.repopulatedAssetsJList(assetsDirectory);
                 feedbackLabel.setText(copyResult);
             }
         });
 
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         this.add(importAssetButton);
-        this.add(Box.createRigidArea(new Dimension(50, 0)));
         this.add(feedbackLabel);
-        this.add(helpImportLabel);
-        this.add(Box.createRigidArea(new Dimension(100, 0)));
     }
 
     public String copyAssetToAssetDirectory(File originalFile, String assetType) {
