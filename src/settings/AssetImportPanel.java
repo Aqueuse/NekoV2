@@ -11,8 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import static init.Init.petAssetsPath;
-import static init.Init.toyAssetsPath;
+import init.Init;
 
 public class AssetImportPanel extends JPanel {
     public AssetImportPanel(String assetsDirectory, String assetType) {
@@ -47,10 +46,10 @@ public class AssetImportPanel extends JPanel {
             Path assetPath = null;
 
             if (assetType.equals("pet")) {
-                assetPath = Path.of(new File(petAssetsPath+File.separatorChar+assetFilename).toURI());
+                assetPath = Path.of(new File(Init.getPetAssetsPath()+File.separatorChar+assetFilename).toURI());
             }
             if (assetType.equals("toy")) {
-                assetPath = Path.of(new File(toyAssetsPath+File.separatorChar+assetFilename).toURI());
+                assetPath = Path.of(new File(Init.getToyAssetsPath()+File.separatorChar+assetFilename).toURI());
             }
 
             if (isAssetDimensionValid(assetBufferedImage, assetType)) {

@@ -77,13 +77,13 @@ public class ListWithPreviewJPanel extends JPanel {
         return assetsList;
     }
 
-    public JList<String> repopulatedAssetsJList(String assetsDirectory) {
+    JList<String> repopulatedAssetsJList(String assetsDirectory) {
         String[] assetsList = getAssetsList(assetsDirectory);
         assetsJList.setListData(assetsList);
         return assetsJList;
     }
 
-    public BufferedImage getAssetSubImage(File assetFile) {
+    BufferedImage getAssetSubImage(File assetFile) {
         BufferedImage bufferedImage = null;
         try {
             bufferedImage = ImageIO.read(assetFile).getSubimage(0, 0, 32, 32);
@@ -95,7 +95,7 @@ public class ListWithPreviewJPanel extends JPanel {
         return bufferedImage;
     }
 
-    public Integer getAssetJListIndex(String assetDirectory, String[] assets) {
+    Integer getAssetJListIndex(String assetDirectory, String[] assets) {
         String setting = assetDirectory.equals("toy") ? (SettingsFileManagement.loadKeyFromSettings("toy")):(SettingsFileManagement.loadKeyFromSettings("pet"));
         for (int i = 0; i < assets.length; i++) {
             if (assets[i].equals(setting)) {

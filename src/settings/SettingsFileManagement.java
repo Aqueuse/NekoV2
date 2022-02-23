@@ -7,10 +7,10 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 import init.Init;
-import static init.Init.*;
 
 public class SettingsFileManagement {
     public static File settingsFile = new File(Objects.requireNonNull(Init.class.getProtectionDomain().getClassLoader().getResource("settings.txt")).getPath());
+
     public static String loadKeyFromSettings(String key) {
         String value = "";
         try {
@@ -50,15 +50,18 @@ public class SettingsFileManagement {
     }
 
     public static BufferedImage getAssetFromSettings(String assetType) throws IOException {
+        File defaultPetFile = new File(Init.getPetAssetsPath() + File.separatorChar + "Neko.png");
+        File defaultToyFile = new File(Init.getToyAssetsPath() + File.separatorChar + "wool.png");
+
         String asset = loadKeyFromSettings(assetType);
 
         if (assetType.equals("pet")) {
-            File assetFile = new File(petAssetsPath + File.separatorChar + asset);
+            File assetFile = new File(Init.getPetAssetsPath() + File.separatorChar + asset);
             if (!assetFile.exists()) {
                 return ImageIO.read(defaultPetFile);
             } else return ImageIO.read(assetFile);
         } else {
-            File assetFile = new File(toyAssetsPath + File.separatorChar + asset);
+            File assetFile = new File(Init.getToyAssetsPath() + File.separatorChar + asset);
             if (!assetFile.exists()) {
 
                 return ImageIO.read(defaultToyFile);
