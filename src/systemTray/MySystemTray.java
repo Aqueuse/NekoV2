@@ -88,7 +88,7 @@ public class MySystemTray {
         public void itemStateChanged(ItemEvent e) {
             Init.myNeko.basketReached = false;
             Init.myNeko.setVisible(true);
-            TwitchListen.twitchListen(false);
+            Init.twitchListen.setActivated(false);
             if (newToy != null) newToy.dispose();
             Toy.catched = true;
 
@@ -133,7 +133,8 @@ public class MySystemTray {
             if (e.getSource() == twitchListenItem) {
                 kittyState = KittyState.LISTEN;
                 setItemState(twitchListenItem);
-                TwitchListen.twitchListen(true);
+                Init.twitchListen = new TwitchListen(loadKeyFromSettings("twitchChannelId"));
+                Init.twitchListen.setActivated(true);
             }
             if (e.getSource() == settingsItem && !settingsJFrame.isVisible()) {
                 settingsJFrame = new SettingsJFrame();

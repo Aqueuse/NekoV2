@@ -8,29 +8,32 @@ import java.util.concurrent.ThreadLocalRandom;
 import init.Init;
 
 public class Toy extends JWindow {
-    JLabel imageLabel = new JLabel();
+    public static int toyPositionX;
+    public static int toyPositionY;
+    public static boolean catched = false;
 
-    int loopCounter = 0;
+    Random random = new Random();
+
+    int screenWidth = Init.getScreenWidth();
+    int screenHeight = Init.getScreenHeight();
+
     enum ToyDirection { TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT }
     int randomDirection = ThreadLocalRandom.current().nextInt(0, ToyDirection.values().length);
     ToyDirection direction = ToyDirection.values()[randomDirection];
 
-    public static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-    public static final int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-
-    public static int toyPositionX = ThreadLocalRandom.current().nextInt(0, screenWidth);
-    public static int toyPositionY = ThreadLocalRandom.current().nextInt(0, screenHeight);
-    public static boolean catched = false;
-
+    int loopCounter = 0;
     int curvature = 14;
-    Random random = new Random();
 
     Timer animateTimer;
     Timer moveTimer;
 
     ImageIcon[] toySprites;
+    JLabel imageLabel = new JLabel();
 
     public Toy() {
+        toyPositionX = random.nextInt(0, Init.getScreenWidth());
+        toyPositionY = random.nextInt(0, Init.getScreenHeight());
+
         getRootPane().putClientProperty("Window.shadow", false);
         this.add(imageLabel);
 
@@ -46,6 +49,7 @@ public class Toy extends JWindow {
         setSize(32, 32);
         setLocation(toyPositionX, toyPositionY);
         this.setVisible(true);
+
         animateToy();
         startBounceToy();
     }

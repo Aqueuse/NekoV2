@@ -13,8 +13,8 @@ public class PetAssets {
     static {
         try {
             petAssetsImage = SettingsFileManagement.getAssetFromSettings("pet");
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
 

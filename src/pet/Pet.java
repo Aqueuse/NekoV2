@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import init.Init;
 import settings.SettingsFileManagement;
 import systemTray.MySystemTray;
 import toy.Toy;
@@ -30,8 +31,8 @@ public class Pet extends javax.swing.JWindow {
 
     public static Timer timer;
 
-    public static final int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-    public static final int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+    public final int screenWidth = Init.getScreenWidth();
+    public final int screenHeight = Init.getScreenHeight();
 
     public Pet() {
         int delay = Integer.parseInt(SettingsFileManagement.loadKeyFromSettings("petDelay"));

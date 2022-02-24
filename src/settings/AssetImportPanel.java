@@ -37,7 +37,7 @@ public class AssetImportPanel extends JPanel {
         this.add(feedbackLabel);
     }
 
-    public String copyAssetToAssetDirectory(File originalFile, String assetType) {
+    String copyAssetToAssetDirectory(File originalFile, String assetType) {
         try {
             Path originalPath = Path.of(originalFile.getAbsolutePath());
             String assetFilename = originalPath.getFileName().toString();
@@ -46,10 +46,10 @@ public class AssetImportPanel extends JPanel {
             Path assetPath = null;
 
             if (assetType.equals("pet")) {
-                assetPath = Path.of(new File(Init.getPetAssetsPath()+File.separatorChar+assetFilename).toURI());
+                assetPath = Path.of(new File(Init.petsAssetsPath+File.separatorChar+assetFilename).toURI());
             }
             if (assetType.equals("toy")) {
-                assetPath = Path.of(new File(Init.getToyAssetsPath()+File.separatorChar+assetFilename).toURI());
+                assetPath = Path.of(new File(Init.toysAssetsPath+File.separatorChar+assetFilename).toURI());
             }
 
             if (isAssetDimensionValid(assetBufferedImage, assetType)) {
@@ -65,7 +65,7 @@ public class AssetImportPanel extends JPanel {
         return "not a png file";
     }
 
-    public boolean isAssetDimensionValid(BufferedImage assetImage, String assetType) {
+    boolean isAssetDimensionValid(BufferedImage assetImage, String assetType) {
         Dimension assetDimension = new Dimension();
 
         if (assetType.equals("pet")) assetDimension  = new Dimension(128, 256);

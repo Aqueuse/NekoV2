@@ -3,8 +3,10 @@ package settings;
 import java.awt.*;
 import javax.swing.*;
 
+import init.Init;
+import twitchInteraction.TwitchListen;
+
 public class TwitchJPanel extends JPanel {
-    public static int channelID = 0;
     public TwitchJPanel() {
         JCheckBox twitchEnableCheckBox = new JCheckBox("enable twitch integration");
 
@@ -39,7 +41,9 @@ public class TwitchJPanel extends JPanel {
 
         saveButton.addActionListener(e -> {
             if (isChannelIdInteger(twitchChannelTextField.getText())) {
-                SettingsFileManagement.writeSettings("twitchChannelId", twitchChannelTextField.getText());
+                String channelID = twitchChannelTextField.getText();
+                SettingsFileManagement.writeSettings("twitchChannelId", channelID);
+                Init.twitchListen = new TwitchListen(channelID);
                 messageLabel.setText("");
             }
             else {
