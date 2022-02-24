@@ -8,7 +8,7 @@
 
 # NekoV2
 
-![Neko](https://github.com/Aqueuse/NekoV2/blob/master/src/neko/images/wakeUp.GIF)
+![Neko](https://github.com/Aqueuse/NekoV2/blob/master/icon.png)
 
 NekoV2 is desktop kitty application. Your cat will chase his ball of yarn around the screen,
 and he will go to sleep in his basket as soon as he becomes tired.
