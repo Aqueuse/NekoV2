@@ -1,10 +1,6 @@
 # TODO
 
-1append external pet asset GIF (choose a different kitten)
-2append external toy asset GIF (choose a different toy)
-3option performance : choose beetween pseudo physic toy AND dyn4j physic toy (do a truly bouncing ball with Dyn4J AND Swing)
-4create an installer (and manage to share openJDK17)
-
+create an installer by os (and manage to share openJDK17)
 
 # NekoV2
 
