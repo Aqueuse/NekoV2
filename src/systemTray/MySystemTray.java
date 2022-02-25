@@ -25,7 +25,7 @@ public class MySystemTray {
     CheckboxMenuItem chaseMouseItem = new CheckboxMenuItem("chase the mouse");
     CheckboxMenuItem catchToyItem = new CheckboxMenuItem("catch the toy");
     CheckboxMenuItem sleepToTheBasketItem = new CheckboxMenuItem("Sleep to the basket");
-    CheckboxMenuItem independentItem = new CheckboxMenuItem("independent kitten");
+    CheckboxMenuItem independentItem = new CheckboxMenuItem("be independent");
 
     CheckboxMenuItem settingsItem = new CheckboxMenuItem("settings");
     MenuItem exitItem = new MenuItem("Exit");
@@ -137,6 +137,7 @@ public class MySystemTray {
                 Init.twitchListen.setActivated(true);
             }
             if (e.getSource() == settingsItem && !settingsJFrame.isVisible()) {
+                setItemState(settingsItem);
                 settingsJFrame = new SettingsJFrame();
                 settingsJFrame.setVisible(true);
             }
@@ -165,9 +166,14 @@ public class MySystemTray {
     }
 
     public void setItemState(CheckboxMenuItem item) {
-        for (CheckboxMenuItem menuItem : menuItems) {
-            menuItem.setState(false);
+        if (item == settingsItem) {
+            settingsItem.setState(false);
         }
-        item.setState(true);
+        else {
+            for (CheckboxMenuItem menuItem : menuItems) {
+                menuItem.setState(false);
+            }
+            item.setState(true);
+        }
     }
 }
