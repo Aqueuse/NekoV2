@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import init.Init;
+import init.RessourceFiles;
 
 public class AssetImportPanel extends JPanel {
     public AssetImportPanel(String assetsDirectory, String assetType) {
@@ -46,10 +46,10 @@ public class AssetImportPanel extends JPanel {
             Path assetPath = null;
 
             if (assetType.equals("pet")) {
-                assetPath = Path.of(new File(Init.petsAssetsPath+File.separatorChar+assetFilename).toURI());
+                assetPath = Path.of(new File(RessourceFiles.userPetsAssetsPath +File.separatorChar+assetFilename).toURI());
             }
             if (assetType.equals("toy")) {
-                assetPath = Path.of(new File(Init.toysAssetsPath+File.separatorChar+assetFilename).toURI());
+                assetPath = Path.of(new File(RessourceFiles.userToyAssetsPath +File.separatorChar+assetFilename).toURI());
             }
 
             if (isAssetDimensionValid(assetBufferedImage, assetType)) {
@@ -60,7 +60,7 @@ public class AssetImportPanel extends JPanel {
             else return "the assets dimensions are not valid";
         }
         catch (IOException ioException) {
-            System.out.println(ioException);
+            ioException.printStackTrace();
         }
         return "not a png file";
     }

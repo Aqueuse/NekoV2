@@ -6,14 +6,13 @@ import java.util.Objects;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
 
-import init.Init;
-import static init.Init.settingsFile;
+import init.RessourceFiles;
 
 public class SettingsFileManagement {
     public static String loadKeyFromSettings(String key) {
         String value = "";
         try {
-            Scanner scanner = new Scanner(new FileReader(settingsFile));
+            Scanner scanner = new Scanner(new FileReader(RessourceFiles.userSettingsFile));
             while (scanner.hasNext()) {
                 String[] line = scanner.nextLine().split("=");
                 if (line[0].equals(key)) value = line[1];
@@ -27,7 +26,7 @@ public class SettingsFileManagement {
 
     public static void writeSettings(String key, String value) {
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(Objects.requireNonNull(settingsFile)));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(Objects.requireNonNull(RessourceFiles.userSettingsFile)));
             Object[] settings = bufferedReader.lines().toArray();
             bufferedReader.close();
 
@@ -37,7 +36,7 @@ public class SettingsFileManagement {
                 }
             }
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Objects.requireNonNull(settingsFile), false));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(Objects.requireNonNull(RessourceFiles.userSettingsFile), false));
 
             for (Object setting : settings) {
                 bufferedWriter.write(setting.toString() + System.lineSeparator());
@@ -49,18 +48,18 @@ public class SettingsFileManagement {
     }
 
     public static BufferedImage getAssetFromSettings(String assetType) throws IOException {
-        File defaultPetFile = new File(Init.petsAssetsPath + File.separatorChar + "Neko.png");
-        File defaultToyFile = new File(Init.toysAssetsPath + File.separatorChar + "wool.png");
+        File defaultPetFile = new File(RessourceFiles.userPetsAssetsPath + File.separatorChar + "Neko.png");
+        File defaultToyFile = new File(RessourceFiles.userToyAssetsPath + File.separatorChar + "wool.png");
 
         String asset = loadKeyFromSettings(assetType);
 
         if (assetType.equals("pet")) {
-            File assetFile = new File(Init.petsAssetsPath + File.separatorChar + asset);
+            File assetFile = new File(RessourceFiles.userPetsAssetsPath + File.separatorChar + asset);
             if (!assetFile.exists()) {
                 return ImageIO.read(defaultPetFile);
             } else return ImageIO.read(assetFile);
         } else {
-            File assetFile = new File(Init.toysAssetsPath + File.separatorChar + asset);
+            File assetFile = new File(RessourceFiles.userToyAssetsPath + File.separatorChar + asset);
             if (!assetFile.exists()) {
 
                 return ImageIO.read(defaultToyFile);

@@ -2,47 +2,62 @@ package init;
 
 import java.awt.*;
 import java.io.File;
-import java.net.URISyntaxException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import pet.Pet;
 import settings.SettingsFileManagement;
 import systemTray.MySystemTray;
 import twitchInteraction.TwitchListen;
+import static init.RessourceFiles.*;
 
 public class Init {
     public static Pet myNeko;
     public static TwitchListen twitchListen;
 
-    public static String applicationLocation = getApplicationPath();
-    public static File settingsFile = new File(applicationLocation, "settings.txt");
-    static File assetsDirectory = new File(applicationLocation, "assets");
-
-    public static String petsAssetsPath = new File(assetsDirectory, "pets").getAbsolutePath();
-    public static String toysAssetsPath = new File(assetsDirectory, "toys").getAbsolutePath();
-
     public static int getScreenWidth() {
         return Toolkit.getDefaultToolkit().getScreenSize().width;
     }
+
     public static int getScreenHeight() {
         return Toolkit.getDefaultToolkit().getScreenSize().height;
     }
 
-    public static String getApplicationPath() {
+    static void copyMissingRessources() {
         try {
-            return new File(Init.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile().getPath();
+            Files.createDirectory(Path.of(RessourceFiles.userSettingsFolder.getAbsolutePath()));
+            Files.createDirectory(Path.of(RessourceFiles.userAssetsFolder.getAbsolutePath()));
+            Files.createDirectory(Path.of(userPetsAssetsPath));
+            Files.createDirectory(Path.of(userToyAssetsPath));
+
+            Files.copy(
+                    Path.of(sharedSettingsFile.getAbsolutePath()),
+                    Path.of(userSettingsFolder.getAbsolutePath(), sharedSettingsFile.getName()));
+
+            for (File sharedPetsAsset : sharedPetsAssets) {
+                Files.copy(
+                        Path.of(sharedPetsAsset.getAbsolutePath()),
+                        Path.of(userPetsAssetsPath, sharedPetsAsset.getName()));
+            }
+
+            for (File sharedToysAsset : sharedToysAssets) {
+                Files.copy(
+                        Path.of(sharedToysAsset.getAbsolutePath()),
+                        Path.of(userToyAssetsPath, sharedToysAsset.getName()));
+            }
         }
-        catch (URISyntaxException uriSyntaxException) {
-            uriSyntaxException.printStackTrace();
+        catch (IOException ioException) {
+            ioException.printStackTrace();
         }
-        return null;
     }
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
+            if (!userSettingsFolder.exists()) copyMissingRessources();
             twitchListen = new TwitchListen(SettingsFileManagement.loadKeyFromSettings("twitchChannelId"));
             new MySystemTray();
             myNeko = new Pet();
         });
     }
-
 }

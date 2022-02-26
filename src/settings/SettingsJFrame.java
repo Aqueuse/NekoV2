@@ -3,7 +3,7 @@ package settings;
 import java.awt.*;
 import javax.swing.*;
 
-import init.Init;
+import init.RessourceFiles;
 import pet.Pet;
 
 public class SettingsJFrame extends JFrame {
@@ -20,8 +20,8 @@ public class SettingsJFrame extends JFrame {
         settingsJpanel.setLayout(new BoxLayout(settingsJpanel, BoxLayout.PAGE_AXIS));
 
         JPanel petAssetsPanel = new JPanel();
-            petsListWithPreviewJPanel = new ListWithPreviewJPanel(Init.petsAssetsPath, "pet");
-            AssetImportPanel petAssetImportPanel = new AssetImportPanel(Init.petsAssetsPath, "pet");
+            petsListWithPreviewJPanel = new ListWithPreviewJPanel(RessourceFiles.userPetsAssetsPath, "pet");
+            AssetImportPanel petAssetImportPanel = new AssetImportPanel(RessourceFiles.userPetsAssetsPath, "pet");
         JLabel nekoImportLabel = new LinkLabel("file format", "https://ours-agile.com/projets/neko/neko.html");
 
         JPanel fpsLabel = singleLineLabelPanel("pet speed", null, SwingConstants.CENTER);
@@ -30,8 +30,8 @@ public class SettingsJFrame extends JFrame {
         TwitchJPanel twitchJPanel = new TwitchJPanel();
 
         JPanel toyAssetsPanel = new JPanel();
-            AssetImportPanel toyAssetImportPanel = new AssetImportPanel(Init.toysAssetsPath, "toy");
-            toysListWithPreviewJPanel = new ListWithPreviewJPanel(Init.toysAssetsPath, "toy");
+            AssetImportPanel toyAssetImportPanel = new AssetImportPanel(RessourceFiles.userToyAssetsPath, "toy");
+            toysListWithPreviewJPanel = new ListWithPreviewJPanel(RessourceFiles.userToyAssetsPath, "toy");
         JLabel toyImportLabel = new LinkLabel("file format", "https://ours-agile.com/projets/neko/neko.html");
 
         JPanel creditLabel = singleLineLabelPanel("credits", null, SwingConstants.CENTER);
