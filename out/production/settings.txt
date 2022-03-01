@@ -1,0 +1,5 @@
+pet=Neko.png
+petDelay=200
+toy=darkWool.png
+twitchEnabled=true
+twitchChannelId=0

@@ -1,0 +1,5 @@
+pet=NekoDark.png
+petDelay=200
+toy=wool.png
+twitchEnabled=true
+twitchChannelId=0
