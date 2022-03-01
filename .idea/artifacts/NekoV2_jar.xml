@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="NekoV2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/NekoV2_jar</output-path>
+    <root id="archive" name="NekoV2.jar">
+      <element id="module-output" name="NekoV2" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ressources/json-20210307.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ressources/Java-WebSocket-1.5.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../librairies - collection_generale/SL4J/slf4j-simple-1.7.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../librairies - collection_generale/SL4J/slf4j-api-1.7.9.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
