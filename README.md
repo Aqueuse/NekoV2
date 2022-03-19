@@ -1,6 +1,7 @@
 # TODO
 
-create an installer by os (and manage to share openJDK17)
+bug to fix :
+   * dual screen toy access
 
 # NekoV2
 
@@ -13,11 +14,8 @@ and he will go to sleep in his basket as soon as he becomes tired.
 
 ## Installation 
 
-* Download the `.jar` file, and the `run.bat` file on the last release page.
+* Download installer for your OS in the release page : https://github.com/Aqueuse/NekoV2/releases/tag/2.0
 
-* Be sure to have a Java Development Kit 15 or 16 installed.
-  You should be able to find the `java.exe` command on the command line.
-  
-  => To download the JDK 16 : https://www.oracle.com/java/technologies/javase-jdk16-downloads.html
+* Do me a feedback if you have problems in the issue page : https://github.com/Aqueuse/NekoV2/issues
 
-* Execute the `run.bat` file or double-click the jar file.
+* If you love Neko, buy me a coffee here : https://ko-fi.com/aqueuse  ☕❤
