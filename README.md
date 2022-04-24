@@ -16,7 +16,7 @@ and he will go to sleep in his basket as soon as he becomes tired.
 
 * Download installer for your OS in the release page : https://github.com/Aqueuse/NekoV2/releases/tag/2.0
 
-* Do me a feedback if you have problems in the issue page : https://github.com/Aqueuse/NekoV2/issues
+* If you have problems, give me a feedback in the issue page : https://github.com/Aqueuse/NekoV2/issues
 
 * If you love Neko, buy me a coffee here : https://ko-fi.com/aqueuse  ☕❤
 
