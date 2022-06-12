@@ -19,18 +19,18 @@ public class MySystemTray {
     final static SystemTray tray = SystemTray.getSystemTray();
     public static TrayIcon trayIcon = null;
 
-    static PopupMenu popup = new PopupMenu();
+    static final PopupMenu popup = new PopupMenu();
 
-    CheckboxMenuItem twitchListenItem = new CheckboxMenuItem("chase the red pointer");
-    CheckboxMenuItem chaseMouseItem = new CheckboxMenuItem("chase the mouse");
-    CheckboxMenuItem catchToyItem = new CheckboxMenuItem("catch the toy");
-    CheckboxMenuItem sleepToTheBasketItem = new CheckboxMenuItem("Sleep to the basket");
-    CheckboxMenuItem independentItem = new CheckboxMenuItem("be independent");
+    final CheckboxMenuItem twitchListenItem = new CheckboxMenuItem("chase the red pointer");
+    final CheckboxMenuItem chaseMouseItem = new CheckboxMenuItem("chase the mouse");
+    final CheckboxMenuItem catchToyItem = new CheckboxMenuItem("catch the toy");
+    final CheckboxMenuItem sleepToTheBasketItem = new CheckboxMenuItem("Sleep to the basket");
+    final CheckboxMenuItem independentItem = new CheckboxMenuItem("be independent");
 
-    CheckboxMenuItem settingsItem = new CheckboxMenuItem("settings");
-    MenuItem exitItem = new MenuItem("Exit");
+    final CheckboxMenuItem settingsItem = new CheckboxMenuItem("settings");
+    final MenuItem exitItem = new MenuItem("Exit");
 
-    CheckboxMenuItem[] menuItems = {twitchListenItem, catchToyItem, sleepToTheBasketItem, chaseMouseItem, independentItem, settingsItem};
+    final CheckboxMenuItem[] menuItems = {twitchListenItem, catchToyItem, sleepToTheBasketItem, chaseMouseItem, independentItem, settingsItem};
 
     SettingsJFrame settingsJFrame = new SettingsJFrame();
 
@@ -83,7 +83,7 @@ public class MySystemTray {
         }
     }
 
-    ItemListener buttonsListener = new ItemListener() {
+    final ItemListener buttonsListener = new ItemListener() {
         @Override
         public void itemStateChanged(ItemEvent e) {
             Init.myNeko.basketReached = false;
@@ -144,7 +144,7 @@ public class MySystemTray {
         }
     };
 
-    ActionListener exitListener = e -> {
+    final ActionListener exitListener = e -> {
         if (e.getSource() == exitItem) {
             System.exit(0);
         }

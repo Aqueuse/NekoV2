@@ -1,6 +1,5 @@
 package twitchInteraction;
 
-import java.net.URI;
 import java.net.*;
 
 public class TwitchListen {
