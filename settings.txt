@@ -1,5 +1,5 @@
 pet=Neko.png
-petDelay=200
+petDelay=5
 toy=wool.png
 twitchEnabled=true
 twitchChannelId=0

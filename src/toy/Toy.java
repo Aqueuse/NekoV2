@@ -12,13 +12,13 @@ public class Toy extends JWindow {
     public static int toyPositionY;
     public static boolean catched = false;
 
-    Random random = new Random();
+    final Random random = new Random();
 
-    int screenWidth = Init.getScreenWidth();
-    int screenHeight = Init.getScreenHeight();
+    final int screenWidth = Init.getScreenWidth();
+    final int screenHeight = Init.getScreenHeight();
 
     enum ToyDirection { TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT }
-    int randomDirection = ThreadLocalRandom.current().nextInt(0, ToyDirection.values().length);
+    final int randomDirection = ThreadLocalRandom.current().nextInt(0, ToyDirection.values().length);
     ToyDirection direction = ToyDirection.values()[randomDirection];
 
     int loopCounter = 0;
@@ -27,8 +27,8 @@ public class Toy extends JWindow {
     Timer animateTimer;
     Timer moveTimer;
 
-    ImageIcon[] toySprites;
-    JLabel imageLabel = new JLabel();
+    final ImageIcon[] toySprites;
+    final JLabel imageLabel = new JLabel();
 
     public Toy() {
         toyPositionX = random.nextInt(0, Init.getScreenWidth());
