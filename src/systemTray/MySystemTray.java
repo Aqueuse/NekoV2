@@ -48,7 +48,7 @@ public class MySystemTray {
         LISTEN
     }
 
-    public static KittyState kittyState = KittyState.AUTONOM;
+    public static KittyState kittyState = KittyState.CHASE;
 
     public MySystemTray() {
         TrayIcon[] trayIcons = tray.getTrayIcons();

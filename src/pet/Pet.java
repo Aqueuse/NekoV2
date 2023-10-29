@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-import init.Init;
 import settings.SettingsFileManagement;
 import systemTray.MySystemTray;
 import toy.Toy;
@@ -31,8 +30,7 @@ public class Pet extends javax.swing.JWindow {
 
     public static Timer timer;
 
-    public final int screenWidth = Init.getScreenWidth();
-    public final int screenHeight = Init.getScreenHeight();
+    public Rectangle screenBounds = getVirtualScreenRectangle();
 
     public Pet() {
         int delay = Integer.parseInt(SettingsFileManagement.loadKeyFromSettings("petDelay"));
@@ -46,7 +44,7 @@ public class Pet extends javax.swing.JWindow {
         pack();
 
         setSize(32, 32);
-        setLocation(500, 500);
+        setLocation((int) screenBounds.getMaxX()-32, (int)screenBounds.getMaxY()-32);
         setVisible(true);
 
         timer = new Timer(delay, e -> {
@@ -57,6 +55,7 @@ public class Pet extends javax.swing.JWindow {
                 case CHASE:
                     PointerInfo pointerInfo = MouseInfo.getPointerInfo();
                     mouseLocation = pointerInfo.getLocation();
+
                     moveCatToPosition(mouseLocation.x, mouseLocation.y);
                     break;
                 case CATCH:
@@ -77,8 +76,8 @@ public class Pet extends javax.swing.JWindow {
                 case AUTONOM:
                     moveCounter = moveCounter - 1;
                     if (moveCounter < 100) {
-                        randomX = ThreadLocalRandom.current().nextInt(0, screenWidth);
-                        randomY = ThreadLocalRandom.current().nextInt(0, screenHeight);
+                        randomX = ThreadLocalRandom.current().nextInt((int)screenBounds.getMinX(), (int)screenBounds.getMaxX());
+                        randomY = ThreadLocalRandom.current().nextInt((int)screenBounds.getMinY(), (int)screenBounds.getMaxY());
                         moveCounter = ThreadLocalRandom.current().nextInt(100, 200);
                     }
                     moveCatToPosition(randomX, randomY);
@@ -120,22 +119,24 @@ public class Pet extends javax.swing.JWindow {
 
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY); // distance formula (from coordinates to cat)
 
+        screenBounds = getVirtualScreenRectangle();
+        System.out.println(screenBounds.getMinX() + " / " + screenBounds.getMaxX());
+
         if (distance <= 32) {
             // Find kitty position
-            if (nekoX <= 0) {
+            if (nekoX <= screenBounds.getMinX()) {
                 animateScratch("left");
             }
-            if (nekoY <= 0) {
+            if (nekoY <= screenBounds.getMinY()) {
                 animateScratch("top");
             }
-            if (nekoX >= screenWidth - 40) {
+            if (nekoX >= screenBounds.getMaxX()-64) {
                 animateScratch("right");
             }
-            if (nekoY >= screenHeight - 50) {
+            if (nekoY >= screenBounds.getMaxY() - 50) {
                 animateScratch("bottom");
             }
-            if (nekoX > 0 && nekoX < screenWidth - 32 &&
-                    nekoY > 0 && nekoY < screenHeight - 32) {
+            if (nekoX < screenBounds.width - 32 && nekoY < screenBounds.height - 32) {
                 sleepCounter = sleepCounter + 1;
                 if (sleepCounter < 14) animatePrepareToSleep();
                 if (sleepCounter >= 14) {
@@ -205,5 +206,21 @@ public class Pet extends javax.swing.JWindow {
             loopCounter = 0;
         }
         return loopCounter;
+    }
+
+    public Rectangle getVirtualScreenRectangle() {
+        Rectangle virtualBounds = new Rectangle();
+
+        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] screenDevices = graphicsEnvironment.getScreenDevices();
+
+        for (GraphicsDevice graphicsDevice : screenDevices) {
+            GraphicsConfiguration[] graphicsConfigurations = graphicsDevice.getConfigurations();
+            for (GraphicsConfiguration graphicsConfiguration : graphicsConfigurations) {
+                virtualBounds = virtualBounds.union(graphicsConfiguration.getBounds());
+            }
+        }
+
+        return virtualBounds;
     }
 }

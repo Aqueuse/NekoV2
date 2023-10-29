@@ -14,9 +14,6 @@ public class Toy extends JWindow {
 
     Random random = new Random();
 
-    int screenWidth = Init.getScreenWidth();
-    int screenHeight = Init.getScreenHeight();
-
     enum ToyDirection { TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT }
     int randomDirection = ThreadLocalRandom.current().nextInt(0, ToyDirection.values().length);
     ToyDirection direction = ToyDirection.values()[randomDirection];
@@ -31,8 +28,8 @@ public class Toy extends JWindow {
     JLabel imageLabel = new JLabel();
 
     public Toy() {
-        toyPositionX = random.nextInt(0, Init.getScreenWidth());
-        toyPositionY = random.nextInt(0, Init.getScreenHeight());
+        toyPositionX = random.nextInt((int)Init.myNeko.screenBounds.getMinX(), (int)Init.myNeko.screenBounds.getMaxX());
+        toyPositionY = random.nextInt((int)Init.myNeko.screenBounds.getMinY(), (int)Init.myNeko.screenBounds.getMaxY());
 
         getRootPane().putClientProperty("Window.shadow", false);
         this.add(imageLabel);
@@ -106,10 +103,10 @@ public class Toy extends JWindow {
     }
 
     private void moveTopRight() {
-        if (toyPositionX >= screenWidth) {
+        if (toyPositionX >= Init.myNeko.screenBounds.getMaxX()) {
             direction = ToyDirection.TOPLEFT;
         }
-        if (toyPositionY <= 0) {
+        if (toyPositionY <= Init.myNeko.screenBounds.getMinY()) {
             direction = ToyDirection.BOTTOMRIGHT;
         } else {
             toyPositionX = toyPositionX + curvature;
@@ -118,11 +115,11 @@ public class Toy extends JWindow {
     }
 
     private void moveBottomRight() {
-        if (toyPositionX >= screenWidth) {
+        if (toyPositionX >= Init.myNeko.screenBounds.getMaxX()) {
             direction = ToyDirection.BOTTOMLEFT;
         }
 
-        if (toyPositionY >= screenHeight) {
+        if (toyPositionY >= Init.myNeko.screenBounds.getMaxY()) {
             direction = ToyDirection.TOPRIGHT;
         } else {
             toyPositionX = toyPositionX + curvature;
@@ -131,11 +128,11 @@ public class Toy extends JWindow {
     }
 
     private void moveBottomLeft() {
-        if (toyPositionX <= 0) {
+        if (toyPositionX <= Init.myNeko.screenBounds.getMinX()) {
             direction = ToyDirection.BOTTOMRIGHT;
         }
 
-        if (toyPositionY >= screenHeight) {
+        if (toyPositionY >= Init.myNeko.screenBounds.getMaxY()) {
             direction = ToyDirection.TOPLEFT;
         } else {
             toyPositionX = toyPositionX - curvature;
@@ -144,10 +141,10 @@ public class Toy extends JWindow {
     }
 
     private void moveTopLeft() {
-        if (toyPositionX <= 0) {
+        if (toyPositionX <= Init.myNeko.screenBounds.getMinX()) {
             direction = ToyDirection.TOPRIGHT;
         }
-        if (toyPositionY <= 0) {
+        if (toyPositionY <= Init.myNeko.screenBounds.getMinY()) {
             direction = ToyDirection.BOTTOMLEFT;
         } else {
             toyPositionX = toyPositionX - curvature;

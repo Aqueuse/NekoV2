@@ -16,14 +16,6 @@ public class Init {
     public static Pet myNeko;
     public static TwitchListen twitchListen;
 
-    public static int getScreenWidth() {
-        return Toolkit.getDefaultToolkit().getScreenSize().width;
-    }
-
-    public static int getScreenHeight() {
-        return Toolkit.getDefaultToolkit().getScreenSize().height;
-    }
-
     static void copyMissingRessources() {
         try {
             Files.createDirectory(Path.of(RessourceFiles.userSettingsFolder.getAbsolutePath()));

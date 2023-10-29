@@ -111,4 +111,20 @@ public class SettingsJFrame extends JFrame {
         }
         return jPanel;
     }
+
+    private static Button screenButton(GraphicsDevice screen, JPanel authorizedScreenPanel) {
+        Button screenButton = new Button(screen.getIDstring().substring(1));
+
+        Rectangle screenBounds = screen.getDefaultConfiguration().getBounds();
+
+        Dimension buttonDimension = screenBounds.getBounds().getSize();
+
+        screenButton.setBounds(
+                Math.abs(authorizedScreenPanel.getX()+screenBounds.x/10),
+                Math.abs(authorizedScreenPanel.getY()+screenBounds.y/10),
+                buttonDimension.width/10,
+                buttonDimension.height/10
+        );
+        return screenButton;
+    }
 }
