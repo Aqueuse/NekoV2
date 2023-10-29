@@ -1,7 +1,7 @@
 # TODO
 
 bug to fix :
-   * dual screen toy access
+   * automatically switch back to independant behaviour in the system tray menu when the ball is catched.
 
 # NekoV2
 
