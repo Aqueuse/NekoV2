@@ -25,7 +25,7 @@ public class MySystemTray {
     CheckboxMenuItem chaseMouseItem = new CheckboxMenuItem("chase the mouse");
     CheckboxMenuItem catchToyItem = new CheckboxMenuItem("catch the toy");
     CheckboxMenuItem sleepToTheBasketItem = new CheckboxMenuItem("Sleep to the basket");
-    CheckboxMenuItem independentItem = new CheckboxMenuItem("be independent");
+    public CheckboxMenuItem independentItem = new CheckboxMenuItem("be independent");
 
     CheckboxMenuItem settingsItem = new CheckboxMenuItem("settings");
     MenuItem exitItem = new MenuItem("Exit");
@@ -48,7 +48,7 @@ public class MySystemTray {
         LISTEN
     }
 
-    public static KittyState kittyState = KittyState.CHASE;
+    public static KittyState kittyState = KittyState.AUTONOM;
 
     public MySystemTray() {
         TrayIcon[] trayIcons = tray.getTrayIcons();
@@ -71,7 +71,7 @@ public class MySystemTray {
         independentItem.setState(true);
         settingsJFrame.setVisible(false);
 
-        setSystemTrayIcons(loadKeyFromSettings("twitchEnabled").equals("true"));
+        assembleSystemTrayIcons(loadKeyFromSettings("twitchEnabled").equals("true"));
 
         trayIcon.setPopupMenu(popup);
         try {
@@ -96,11 +96,11 @@ public class MySystemTray {
 
             if (e.getSource() == chaseMouseItem) {  // chase the mouse
                 kittyState = KittyState.CHASE;
-                setItemState(chaseMouseItem);
+                activateCheckBoxItem(chaseMouseItem);
             }
             if (e.getSource() == catchToyItem) {  // catch the toy
                 kittyState = KittyState.CATCH;
-                setItemState(catchToyItem);
+                activateCheckBoxItem(catchToyItem);
 
                 Toy.catched = false;
                 newToy = new Toy();
@@ -124,20 +124,20 @@ public class MySystemTray {
                 }
 
                 kittyState = KittyState.SLEEP;
-                setItemState(sleepToTheBasketItem);
+                activateCheckBoxItem(sleepToTheBasketItem);
             }
             if (e.getSource() == independentItem) { // do what you want, don't chase the mouse
                 kittyState = KittyState.AUTONOM;
-                setItemState(independentItem);
+                activateCheckBoxItem(independentItem);
             }
             if (e.getSource() == twitchListenItem) {
                 kittyState = KittyState.LISTEN;
-                setItemState(twitchListenItem);
+                activateCheckBoxItem(twitchListenItem);
                 Init.twitchListen = new TwitchListen(loadKeyFromSettings("twitchChannelId"));
                 Init.twitchListen.setActivated(true);
             }
             if (e.getSource() == settingsItem && !settingsJFrame.isVisible()) {
-                setItemState(settingsItem);
+                settingsItem.setState(false);
                 settingsJFrame = new SettingsJFrame();
                 settingsJFrame.setVisible(true);
             }
@@ -150,7 +150,7 @@ public class MySystemTray {
         }
     };
 
-    public void setSystemTrayIcons(boolean isTwitchEnabled) {
+    public void assembleSystemTrayIcons(boolean isTwitchEnabled) {
         popup.removeAll();
         if (isTwitchEnabled) {
             popup.add(twitchListenItem);
@@ -165,15 +165,10 @@ public class MySystemTray {
         popup.add(exitItem);
     }
 
-    public void setItemState(CheckboxMenuItem item) {
-        if (item == settingsItem) {
-            settingsItem.setState(false);
+    public void activateCheckBoxItem(CheckboxMenuItem item) {
+        for (CheckboxMenuItem menuItem : menuItems) {
+            menuItem.setState(false);
         }
-        else {
-            for (CheckboxMenuItem menuItem : menuItems) {
-                menuItem.setState(false);
-            }
-            item.setState(true);
-        }
+        item.setState(true);
     }
 }

@@ -15,6 +15,7 @@ import static init.RessourceFiles.*;
 public class Init {
     public static Pet myNeko;
     public static TwitchListen twitchListen;
+    public static MySystemTray mySystemTray;
 
     static void copyMissingRessources() {
         try {
@@ -48,7 +49,7 @@ public class Init {
         EventQueue.invokeLater(() -> {
             if (!userSettingsFolder.exists()) copyMissingRessources();
             twitchListen = new TwitchListen(SettingsFileManagement.loadKeyFromSettings("twitchChannelId"));
-            new MySystemTray();
+            mySystemTray = new MySystemTray();
             myNeko = new Pet();
         });
     }

@@ -95,6 +95,7 @@ public class Toy extends JWindow {
             if (catched) {
                 moveTimer.stop();
                 animateTimer.stop();
+                Init.mySystemTray.activateCheckBoxItem(Init.mySystemTray.independentItem);
                 setVisible(false);
             }
         });
