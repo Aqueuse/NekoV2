@@ -66,7 +66,7 @@ public class PetAssets {
         animateRightBottomSprites = new ImageIcon[]{
                 new ImageIcon(petAssetsImage.getSubimage(64, 160, 32, 32)),
                 new ImageIcon(petAssetsImage.getSubimage(96, 160, 32, 32))
-        };;
+        };
 
         scratchLeftSprites = new ImageIcon[]{
                 new ImageIcon(petAssetsImage.getSubimage(0, 224, 32, 32)),
