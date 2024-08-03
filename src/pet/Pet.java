@@ -24,7 +24,6 @@ public class Pet extends javax.swing.JWindow {
     private int listen_x = 0;
     private  int listen_y = 0;
     final double pi = Math.PI;
-    private String orientation;
 
     public boolean basketReached = false;
 
@@ -120,21 +119,20 @@ public class Pet extends javax.swing.JWindow {
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY); // distance formula (from coordinates to cat)
 
         screenBounds = getVirtualScreenRectangle();
-        System.out.println(screenBounds.getMinX() + " / " + screenBounds.getMaxX());
 
         if (distance <= 32) {
             // Find kitty position
             if (nekoX <= screenBounds.getMinX()) {
-                animateScratch("left");
+                animateScratch(KittyPosition.LEFT);
             }
             if (nekoY <= screenBounds.getMinY()) {
-                animateScratch("top");
+                animateScratch(KittyPosition.TOP);
             }
             if (nekoX >= screenBounds.getMaxX()-64) {
-                animateScratch("right");
+                animateScratch(KittyPosition.RIGHT);
             }
             if (nekoY >= screenBounds.getMaxY() - 50) {
-                animateScratch("bottom");
+                animateScratch(KittyPosition.DOWN);
             }
             if (nekoX < screenBounds.width - 32 && nekoY < screenBounds.height - 32) {
                 sleepCounter = sleepCounter + 1;
@@ -156,47 +154,44 @@ public class Pet extends javax.swing.JWindow {
 
     private void animateMove(double theta) {
         // recalculate orientation
-        if (theta >= 7 * pi / 8 || theta <= -7 * pi / 8) orientation = "left";
-        if (theta >= -pi / 8 && theta <= pi / 8) orientation = "right";
-        if (theta >= 3 * pi / 8 && theta <= 5 * pi / 8) orientation = "top";
-        if (theta >= -5 * pi / 8 && theta <= -3 * pi / 8) orientation = "bottom";
-        if (theta > 5 * pi / 8 && theta < 7 * pi / 8) orientation = "leftTop";
-        if (theta > -7 * pi / 8 && theta < -5 * pi / 8) orientation = "leftBottom";
-        if (theta > pi / 8 && theta < 3 * pi / 8) orientation = "rightTop";
-        if (theta > -3 * pi / 8 && theta < -pi / 8) orientation = "rightBottom";
-
-        switch (orientation) {
-            case "left" -> kittySprites = PetAssets.animateLeft();
-            case "right" -> kittySprites = PetAssets.animateRight();
-            case "top" -> kittySprites = PetAssets.animateTop();
-            case "bottom" -> kittySprites = PetAssets.animateBottom();
-            case "leftTop" -> kittySprites = PetAssets.animateLeftTop();
-            case "leftBottom" -> kittySprites = PetAssets.animateLeftBottom();
-            case "rightTop" -> kittySprites = PetAssets.animateRightTop();
-            case "rightBottom" -> kittySprites = PetAssets.animateRightBottom();
-        }
+        if (theta >= 7 * pi / 8 || theta <= -7 * pi / 8) kittySprites = PetAssets.animateLeftSprites;
+        if (theta >= -pi / 8 && theta <= pi / 8) kittySprites = PetAssets.animateRightSprites;
+        if (theta >= 3 * pi / 8 && theta <= 5 * pi / 8) kittySprites = PetAssets.animateTopSprites;
+        if (theta >= -5 * pi / 8 && theta <= -3 * pi / 8) kittySprites = PetAssets.animateBottomSprites;
+        if (theta > 5 * pi / 8 && theta < 7 * pi / 8) kittySprites = PetAssets.animateLeftTopSprites;
+        if (theta > -7 * pi / 8 && theta < -5 * pi / 8) kittySprites = PetAssets.animateLeftBottomSprites;
+        if (theta > pi / 8 && theta < 3 * pi / 8) kittySprites = PetAssets.animateRightTopSprites;
+        if (theta > -3 * pi / 8 && theta < -pi / 8) kittySprites = PetAssets.animateRightBottomSprites;
 
         imageLabel.repaint();
         imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
     }
 
-    private void animateScratch(String kittyPosition) {
+    private void animateScratch(KittyPosition kittyPosition) {
         switch (kittyPosition) {
-            case "left" -> kittySprites = PetAssets.animateScratchLeft();
-            case "right" -> kittySprites = PetAssets.animateScratchRight();
-            case "top" -> kittySprites = PetAssets.animateScratchTop();
-            case "bottom" -> kittySprites = PetAssets.animateScratchBottom();
+            case LEFT:
+                kittySprites = PetAssets.scratchLeftSprites;
+                break;
+            case RIGHT:
+                kittySprites = PetAssets.scratchRightSprites;
+                break;
+            case TOP:
+                kittySprites = PetAssets.scratchTopSprites;
+                break;
+            case DOWN:
+                kittySprites = PetAssets.scratchBottomSprites;
+                break;
         }
         imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
     }
 
     private void animatePrepareToSleep() {
-        kittySprites = PetAssets.animatePrepareToSleep();
+        kittySprites = PetAssets.prepareToSleepSprites;
         imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
     }
 
     private void animateSleep() {
-        kittySprites = PetAssets.animateSleep();
+        kittySprites = PetAssets.sleepSprites;
         imageLabel.setIcon(kittySprites[loopIndex(kittySprites)]);
     }
 

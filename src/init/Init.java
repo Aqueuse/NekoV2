@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import pet.Pet;
+import pet.PetAssets;
 import settings.SettingsFileManagement;
 import systemTray.MySystemTray;
 import twitchInteraction.TwitchListen;
@@ -41,16 +42,25 @@ public class Init {
             }
         }
         catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.out.println(ioException);
         }
     }
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             if (!userSettingsFolder.exists()) copyMissingRessources();
-            twitchListen = new TwitchListen(SettingsFileManagement.loadKeyFromSettings("twitchChannelId"));
-            mySystemTray = new MySystemTray();
-            myNeko = new Pet();
+
+            try {
+                PetAssets.petAssetsImage = SettingsFileManagement.getAssetFromSettings("pet");
+                PetAssets.reloadAssets();
+
+                twitchListen = new TwitchListen(SettingsFileManagement.loadKeyFromSettings("twitchChannelId"));
+                mySystemTray = new MySystemTray();
+                myNeko = new Pet();
+            }
+            catch (IOException ioException) {
+                System.out.println(ioException);
+            }
         });
     }
 }

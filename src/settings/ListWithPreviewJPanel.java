@@ -47,6 +47,8 @@ public class ListWithPreviewJPanel extends JPanel {
 
                     if (assetType.equals("pet")) {
                         PetAssets.petAssetsImage = getAssetFromSettings(assetType);
+                        PetAssets.reloadAssets();
+
                         MySystemTray.trayIcon.setImage(PetAssets.preview());
                     }
                     if (assetType.equals("toy")) {

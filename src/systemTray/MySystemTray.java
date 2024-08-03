@@ -10,9 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.*;
 
-import static settings.SettingsFileManagement.getAssetFromSettings;
 import static settings.SettingsFileManagement.loadKeyFromSettings;
 
 public class MySystemTray {
@@ -75,11 +73,10 @@ public class MySystemTray {
 
         trayIcon.setPopupMenu(popup);
         try {
-            PetAssets.petAssetsImage = getAssetFromSettings("pet");
             trayIcon.setImage(PetAssets.preview());
             tray.add(trayIcon);
-        } catch (AWTException | IOException exception) {
-            exception.printStackTrace();
+        } catch (AWTException awtException) {
+            awtException.printStackTrace();
         }
     }
 
