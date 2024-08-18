@@ -29,7 +29,7 @@ jpackage --input . --name NekoV2  --main-jar NekoV2.jar --icon icon.png --linux-
 
 * If you have problems, give me a feedback in the issue page : https://github.com/Aqueuse/NekoV2/issues
 
-* If you love Neko, buy me a coffee here : https://ko-fi.com/aqueuse  ☕❤
+* If you love Neko, buy him a coffee here : https://ko-fi.com/aqueuse  ☕❤
 
 
 ## package creation
@@ -37,3 +37,9 @@ jpackage --input . --name NekoV2  --main-jar NekoV2.jar --icon icon.png --linux-
 ### Debian/Ubuntu
 
 ```jpackage --input . --name NekoV2  --main-jar NekoV2.jar --icon icon.png --linux-shortcut --license-file LICENSE --app-version 2.0 --description "Neko application for the desktop" --type deb```
+
+
+## Credits
+
+Warmadon for the help with avalonia advanced features
+JeCodeLeSoir for the help with WPF for the SystemTrayIcon
